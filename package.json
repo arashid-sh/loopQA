@@ -1,0 +1,24 @@
+{
+  "name": "marketplace-test-automation-playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "author": "",
+  "scripts": {},
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "husky": "^9.0.0",
+    "prettier": "3.2.5"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.0.0",
+    "@types/node": "^20.11.25",
+    "@typescript-eslint/parser": "^7.0.0",
+    "dayjs": "^1.0.0",
+    "dotenv": "^16.0.0",
+    "eslint-plugin-playwright": "^1.0.0"
+  }
+}
