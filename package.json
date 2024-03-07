@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "ISC",
-  "author": "",
+  "author": "Affan Rashid <affan.rashid@hearst.com>",
   "scripts": {},
   "devDependencies": {
     "@playwright/test": "^1.42.1",
