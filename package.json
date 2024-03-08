@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "ISC",
   "author": "Affan Rashid <affan.rashid@hearst.com>",
-  "scripts": {},
+  "scripts": {
+    "test:mhqa": "TEST_ENV=mhqa npx playwright test"
+  },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
