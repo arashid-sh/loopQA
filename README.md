@@ -1,11 +1,12 @@
 # PLAYWRIGHT Framework
 
-This project is the main repository for functional UI tests for the PRISM app.
+This project is the main repository for functional UI tests for the Hearst store
 
 ## Dependencies
 
 - vscode or any other IDE of your choice
 - NodeJS
+- Yarn
 - Playwright
 
 ## How To Run Locally

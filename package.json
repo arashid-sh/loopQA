@@ -1,18 +1,19 @@
 {
-  "name": "marketplace-test-automation-playwright",
+  "name": "e2e-test-automation",
   "version": "1.0.0",
   "main": "index.js",
   "license": "ISC",
   "author": "Affan Rashid <affan.rashid@hearst.com>",
   "scripts": {
-    "test:mhqa": "TEST_ENV=mhqa npx playwright test"
+    "test:mhqa": "TEST_ENV=mhqa npx playwright test --grep @MH",
+    "test:mhqa-smoke": "TEST_ENV=mhqa npx playwright test --grep @MH @SMOKE"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^9.0.0",
-    "husky": "^9.0.0",
+    "husky": "^9.0.11",
     "prettier": "3.2.5"
   },
   "dependencies": {

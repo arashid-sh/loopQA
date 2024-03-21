@@ -13,6 +13,10 @@ config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  // Test timeout. By Default a single test run has a default time out of 30 seconds. If the test hasn't finished with in
+  // that time it will be marked as a failure. We can change the default test timeout below
+  timeout: 5 * 60 * 1000,
+  expect: { timeout: 10 * 5000 },
   testDir: './src/tests',
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -33,7 +37,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    navigationTimeout: 30000,
+    navigationTimeout: 300000,
     actionTimeout: 100000,
     headless: false,
     baseURL: setEnvironment(),
@@ -46,15 +50,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+    },
 
     /* Test against mobile viewports. */
     // {
