@@ -2,24 +2,56 @@ import { Locator, Page } from '@playwright/test';
 
 export class ProductListPage {
   readonly page: Page;
-  readonly signInButton: Locator;
+  readonly mobileFilterButton: Locator;
   readonly searchInputField: Locator;
   readonly searchButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.signInButton = page.locator('span:has-text("Sign In")');
-    this.searchInputField = page.getByRole('textbox', { name: 'search' });
-    this.searchButton = page.getByTestId('fs-search-button');
+    this.mobileFilterButton = this.page.getByTestId('open-filter-button');
   }
 
   /**
    * Function selects the given product on the product list page
-   * @param productName
+   * @param productName name of the product
    */
   async selectProduct(productName: string): Promise<void> {
     const product = this.page.locator('a', { hasText: productName }).first();
     await product.waitFor();
     await product.click();
+  }
+
+  /**
+   * Filter the products by the given filter
+   * @param isMobile variable determines if the test is being run on mobile
+   * @filter the filter that will be used.
+   */
+  async filterBy(isMobile = false, filter: string): Promise<void> {
+    if (isMobile) {
+      await this.mobileFilterButton.click();
+    } else {
+      console.log('not mobile');
+    }
+  }
+
+  /**
+   * Function will sort the product list page according tot he sort option given
+   * @param sortOption option (e.g Price, ascending; Price, descending, etc)
+   */
+  async sortBy(sortOption: string): Promise<void> {
+    await this.page.getByTestId('search-sort').selectOption(sortOption);
+  }
+
+  /**
+   * Function gets all the prices on the product list page (usually results from a search)
+   * @returns an array of prices
+   */
+  async getAllProductPrices(): Promise<number[]> {
+    // TODO: Need a better way to check that the results are done loading
+    await this.page.waitForTimeout(1000);
+    // Get list of all the elements that contain the prices for each product
+    const productPrices = await this.page.locator('[data-testid="product-card-selling-price"]').allTextContents();
+    // Extract only the price from the array of string and convert to Int
+    return productPrices.map((str) => parseInt(str.split(':')[1].trim().slice(1)));
   }
 }

@@ -37,8 +37,8 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    navigationTimeout: 300000,
-    actionTimeout: 100000,
+    navigationTimeout: 30000,
+    actionTimeout: 30000,
     headless: false,
     baseURL: setEnvironment(),
   },
@@ -50,15 +50,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -67,7 +67,7 @@ export default defineConfig({
     // },
     // {
     //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
+    //   use: { ...devices['iPhone 12'], isMobile: true },
     // },
 
     /* Test against branded browsers. */

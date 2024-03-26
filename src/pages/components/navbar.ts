@@ -5,12 +5,14 @@ export class NavBar {
   readonly signInButton: Locator;
   readonly searchInputField: Locator;
   readonly searchButton: Locator;
+  readonly mobileSearchButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.signInButton = page.locator('span:has-text("Sign In")');
     this.searchInputField = page.getByRole('textbox', { name: 'search' });
     this.searchButton = page.getByTestId('fs-search-button');
+    this.mobileSearchButton = page.getByTestId('store-input-mobile-button');
   }
 
   /**
@@ -25,8 +27,14 @@ export class NavBar {
    * @param productName name of the product you want to search for.
    */
   async searchForProduct(productName: string): Promise<void> {
-    await this.searchInputField.fill(productName);
-    await this.searchButton.click();
+    if (await this.mobileSearchButton.isVisible()) {
+      await this.mobileSearchButton.click();
+      await this.searchInputField.fill(productName);
+      await this.mobileSearchButton.click();
+    } else {
+      await this.searchInputField.fill(productName);
+      await this.searchButton.click();
+    }
   }
 
   /**

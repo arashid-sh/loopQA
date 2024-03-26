@@ -20,6 +20,6 @@ export class ProductDetailsPage {
    */
   async addQuantityToCart(quantity: string): Promise<void> {
     await this.quantityInputField.fill(quantity);
-    await this.addToCartButton.click();
+    await this.addToCartButton.click({ delay: 1000 });
   }
 }
