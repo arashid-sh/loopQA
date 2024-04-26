@@ -3,12 +3,12 @@ import { Locator, Page } from '@playwright/test';
 export class ProductListPage {
   readonly page: Page;
   readonly mobileFilterButton: Locator;
-  readonly searchInputField: Locator;
-  readonly searchButton: Locator;
+  readonly loadMoreProductsButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.mobileFilterButton = this.page.getByTestId('open-filter-button');
+    this.loadMoreProductsButton = this.page.getByTestId('show-more');
   }
 
   /**
@@ -21,18 +21,18 @@ export class ProductListPage {
     await product.click();
   }
 
-  /**
-   * Filter the products by the given filter
-   * @param isMobile variable determines if the test is being run on mobile
-   * @filter the filter that will be used.
-   */
-  async filterBy(isMobile = false, filter: string): Promise<void> {
-    if (isMobile) {
-      await this.mobileFilterButton.click();
-    } else {
-      console.log('not mobile');
-    }
-  }
+  // /**
+  //  * Filter the products by the given filter
+  //  * @param isMobile variable determines if the test is being run on mobile
+  //  * @filter the filter that will be used.
+  //  */
+  // async filterBy(isMobile = false, filter: string): Promise<void> {
+  //   if (isMobile) {
+  //     await this.mobileFilterButton.click();
+  //   } else {
+  //     console.log('not mobile');
+  //   }
+  // }
 
   /**
    * Function will sort the product list page according tot he sort option given
@@ -48,10 +48,37 @@ export class ProductListPage {
    */
   async getAllProductPrices(): Promise<number[]> {
     // TODO: Need a better way to check that the results are done loading
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(2000);
     // Get list of all the elements that contain the prices for each product
     const productPrices = await this.page.locator('[data-testid="product-card-selling-price"]').allTextContents();
     // Extract only the price from the array of string and convert to Int
     return productPrices.map((str) => parseInt(str.split(':')[1].trim().slice(1)));
+  }
+
+  /**
+   * Function gets all the names of all the products with in the product gallery when searching
+   * @returns a array of products
+   */
+  async getAllProductNames(): Promise<string[]> {
+    await this.page.waitForTimeout(2000);
+
+    return await this.page.locator('[data-testid="fs-product-card-content"] a span').allInnerTexts();
+  }
+
+  /**
+   * Function gets all the product cards from the gallery
+   */
+  async getAllProduct(): Promise<Locator[]> {
+    await this.page.waitForTimeout(2000);
+    return await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').all();
+  }
+
+  /**
+   * Function the very first product name
+   * @returns a array of products
+   */
+  async getFirstProductNameInGallery(): Promise<string> {
+    await this.page.waitForTimeout(2000);
+    return await this.page.locator('[data-testid="fs-product-card-content"] a span').first().innerText();
   }
 }

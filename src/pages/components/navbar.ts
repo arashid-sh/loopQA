@@ -44,4 +44,12 @@ export class NavBar {
   async selectNavBarOption(menuOption: string): Promise<void> {
     await this.page.getByRole('link', { name: `${menuOption}` }).click();
   }
+
+  /**
+   * Function clicks on the given links in the navigation bar e.g "Books & Guides", "Grooming", etc
+   * @param link The link you want to click on
+   */
+  async clickLink(link: string): Promise<void> {
+    await this.page.getByRole('link', { name: `${link}` }).click();
+  }
 }

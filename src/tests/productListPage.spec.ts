@@ -51,3 +51,15 @@ test.describe('Orders', () => {
   //   // await expect(page.getByRole('heading', { name: 'Thank you for your purchase' })).toBeVisible();
   // });
 });
+
+test.describe('Product List Page', () => {
+  test('ECMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
+    await page.goto('/');
+
+    await navBar.clickLink('Fitness & Nutrition');
+    const allProductsInGalleryBefore = await productListPage.getAllProduct();
+    await productListPage.loadMoreProductsButton.click();
+    const allProductsInGalleryAfter = await productListPage.getAllProduct();
+    expect(allProductsInGalleryBefore.length).toBeLessThan(allProductsInGalleryAfter.length);
+  });
+});
