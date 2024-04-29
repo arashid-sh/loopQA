@@ -23,6 +23,7 @@ export class SignInPage {
    * @param password: the accounts password
    */
   async loginUser(email: string, password: string): Promise<void> {
+    await this.emailInputField.waitFor({ timeout: 5000 });
     await this.emailInputField.fill(email);
     await this.continueButton.click();
     await this.passwordInputField.fill(password);
