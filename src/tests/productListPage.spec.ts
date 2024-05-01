@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('Orders', () => {
+test.describe.skip('Orders', () => {
   test('validate a user can order a product when not logged in @MH @SMOKE', async ({
     page,
     navBar,

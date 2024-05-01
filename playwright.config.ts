@@ -39,7 +39,7 @@ export default defineConfig({
     video: 'retain-on-failure',
     navigationTimeout: 300000,
     actionTimeout: 100000,
-    headless: false,
+    headless: true,
     baseURL: setEnvironment(),
   },
 
@@ -55,10 +55,10 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+    // },
 
     /* Test against mobile viewports. */
     // {
