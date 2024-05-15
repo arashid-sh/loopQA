@@ -6,12 +6,18 @@ export class SignInPage {
   readonly emailInputField: Locator;
   readonly passwordInputField: Locator;
   readonly signInButton: Locator;
+  readonly continueButton: Locator;
+  readonly forgotPasswordLink: Locator;
+  readonly returnToSignInLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.emailInputField = page.locator('#email');
     this.passwordInputField = page.locator('#password');
     this.signInButton = page.getByTestId('LoginFormButton');
+    this.continueButton = page.getByTestId('LandingFormButton');
+    this.forgotPasswordLink = page.getByRole('link', { name: 'Forgot or need a password?' });
+    this.returnToSignInLink = page.getByRole('link', { name: 'Return to Sign In' });
   }
 
   /**
@@ -22,6 +28,7 @@ export class SignInPage {
    */
   async loginUser(email: string, password: string): Promise<void> {
     await this.emailInputField.fill(email);
+    await this.continueButton.click();
     await this.passwordInputField.fill(password);
     await this.signInButton.click();
   }

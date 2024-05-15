@@ -1,6 +1,6 @@
 export const environments = {
   whqa: '',
-  mhqa: 'https://marketplace.qa.ecmapps.net/',
+  mhqa: 'https://qa.menshealth.ecmapps.com/',
   whprod: '',
 };
 

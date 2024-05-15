@@ -4,11 +4,13 @@ export class ProductListPage {
   readonly page: Page;
   readonly mobileFilterButton: Locator;
   readonly loadMoreProductsButton: Locator;
+  readonly imageGallery: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.mobileFilterButton = this.page.getByTestId('open-filter-button');
     this.loadMoreProductsButton = this.page.getByTestId('show-more');
+    this.imageGallery = this.page.locator('[data-testid="fs-image-gallery-selector"] button img');
   }
 
   /**

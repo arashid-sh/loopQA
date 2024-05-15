@@ -6,6 +6,7 @@ export class NavBar {
   readonly searchInputField: Locator;
   readonly searchButton: Locator;
   readonly mobileSearchButton: Locator;
+  readonly searchClearHistoryButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -13,6 +14,7 @@ export class NavBar {
     this.searchInputField = page.getByRole('textbox', { name: 'search' });
     this.searchButton = page.getByTestId('fs-search-button');
     this.mobileSearchButton = page.getByTestId('store-input-mobile-button');
+    this.searchClearHistoryButton = page.getByText('HistoryClear History').getByTestId('fs-button');
   }
 
   /**
@@ -27,6 +29,7 @@ export class NavBar {
    * @param productName name of the product you want to search for.
    */
   async searchForProduct(productName: string): Promise<void> {
+    //check if mobile search icon button is visible indicating mobile view port
     if (await this.mobileSearchButton.isVisible()) {
       await this.mobileSearchButton.click();
       await this.searchInputField.fill(productName);

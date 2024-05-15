@@ -2,9 +2,8 @@ import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
 
 config();
-
 test.describe('Orders', () => {
-  test('validate a user can order a product when not logged in @MH @SMOKE', async ({
+  test('validate a user can order a product when NOT logged in @MH @SMOKE', async ({
     page,
     navBar,
     productListPage,
@@ -22,7 +21,9 @@ test.describe('Orders', () => {
     await cart.addShippingInfo();
     await cart.addPaymentInfo(await creditCards.createCreditCard());
     await cart.clickBuyNowButton();
+    await page.waitForResponse(/.*orderPlaced.*/);
     await expect(page).toHaveTitle('Order Placed');
+    await expect(page).toHaveURL(/.*checkout\/orderPlaced.*/);
     await expect(page.getByRole('heading', { name: 'Thank you for your purchase' })).toBeVisible();
   });
 
@@ -50,16 +51,4 @@ test.describe('Orders', () => {
   //   // await expect(page).toHaveTitle('Order Placed');
   //   // await expect(page.getByRole('heading', { name: 'Thank you for your purchase' })).toBeVisible();
   // });
-});
-
-test.describe('Product List Page', () => {
-  test('ECMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
-    await page.goto('/');
-
-    await navBar.clickLink('Fitness & Nutrition');
-    const allProductsInGalleryBefore = await productListPage.getAllProduct();
-    await productListPage.loadMoreProductsButton.click();
-    const allProductsInGalleryAfter = await productListPage.getAllProduct();
-    expect(allProductsInGalleryBefore.length).toBeLessThan(allProductsInGalleryAfter.length);
-  });
 });

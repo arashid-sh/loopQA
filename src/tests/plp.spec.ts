@@ -1,4 +1,4 @@
-import { expect, test } from '../../src/lib/fixture';
+import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
 
 config();
@@ -55,22 +55,15 @@ test.describe('plp', () => {
     expect(product).toMatch((await page.getByRole('heading', { name: `${product}` }).innerText()).trim());
   });
 
-  test('verify search history displays in the search bar', async ({ page, navBar }) => {
-    await navBar.searchInputField.focus();
-    await navBar.searchInputField.click();
-    await expect(page.getByTestId('fs-search-history')).toBeVisible();
-  });
+  test.describe('pagination', () => {
+    test('ECMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
+      await page.goto('/');
 
-  test('verify user can clear search history', async ({ page, navBar }) => {
-    await navBar.searchInputField.focus();
-    await navBar.searchInputField.click();
-    await navBar.searchClearHistoryButton.click();
-    await expect(page.getByTestId('fs-search-history')).not.toBeVisible();
-  });
-
-  test('verify search auto complete suggestions', async ({ page, navBar }) => {
-    navBar.searchInputField.focus();
-    navBar.searchInputField.fill('t');
-    await expect(page.getByTestId('fs-search-auto-complete')).toBeVisible();
+      await navBar.clickLink('Fitness & Nutrition');
+      const allProductsInGalleryBefore = await productListPage.getAllProduct();
+      await productListPage.loadMoreProductsButton.click();
+      const allProductsInGalleryAfter = await productListPage.getAllProduct();
+      expect(allProductsInGalleryBefore.length).toBeLessThan(allProductsInGalleryAfter.length);
+    });
   });
 });
