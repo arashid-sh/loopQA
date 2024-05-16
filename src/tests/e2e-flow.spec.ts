@@ -11,7 +11,7 @@ test.describe('orders', () => {
     cart,
     creditCards,
   }) => {
-    test.setTimeout(120000);
+    test.setTimeout(300000);
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);

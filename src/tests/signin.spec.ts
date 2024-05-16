@@ -4,7 +4,9 @@ import { config } from 'dotenv';
 config();
 
 test.describe('sign in', () => {
-  test.beforeEach(async ({ page, navBar }) => {
+  test.beforeEach(async ({ page, navBar }, testInfo) => {
+    // Changing time out for these tests as they run longer on safari webkit on CI.
+    testInfo.setTimeout(testInfo.timeout + 60000);
     await page.goto('/');
     await navBar.clickSignInButton();
   });

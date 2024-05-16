@@ -8,6 +8,10 @@
                 "projects": [
                     {
                         "name": "chromium",
+                        "enabled": false
+                    },
+                    {
+                        "name": "webkit",
                         "enabled": true
                     }
                 ]
