@@ -1,4 +1,4 @@
-import { expect, test } from '../lib/fixture';
+import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
 
 config();
