@@ -12,37 +12,34 @@ test.describe('plp', () => {
     await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
   });
 
-  test('eCMP-2123 validate sort by price, descending', async ({ page, productListPage }) => {
+  test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
     await productListPage.sortBy('price_desc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeGreaterThan(prices[prices.length - 1]);
   });
 
-  test('eCMP-2124 validate sort by price, ascending', async ({ page, productListPage }) => {
+  test('eCMP-2124 validate sort by price, ascending', async ({ productListPage }) => {
     await productListPage.sortBy('price_asc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
   });
 
-  test('eCMP-2125 validate sort by name, A-Z', async ({ page, productListPage }) => {
+  test('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
     await productListPage.sortBy('name_asc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const allProductNames = await productListPage.getAllProductNames();
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1); //localCompare() returns -1 if less than, 0 if equal, 1 if great than
   });
 
-  test('eCMP-2126 validate sort by name, Z-A', async ({ page, productListPage }) => {
+  test('eCMP-2126 validate sort by name, Z-A', async ({ productListPage }) => {
     await productListPage.sortBy('name_desc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
+
     const allProductNames = await productListPage.getAllProductNames();
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(1);
   });
 
-  test('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {
+  test('eCMP-2127 validate sort by discount', async ({ productListPage }) => {
     await productListPage.sortBy('discount_desc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
+
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
   });

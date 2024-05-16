@@ -29,7 +29,9 @@ export class SignInPage {
   async loginUser(email: string, password: string): Promise<void> {
     await this.emailInputField.waitFor({ timeout: 30000 });
     await this.emailInputField.fill(email);
-    await this.continueButton.click();
+    if (await this.continueButton.isVisible()) {
+      await this.continueButton.click();
+    }
     await this.passwordInputField.fill(password);
     await this.signInButton.click();
   }

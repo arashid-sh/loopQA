@@ -42,6 +42,8 @@ export class ProductListPage {
    */
   async sortBy(sortOption: string): Promise<void> {
     await this.page.getByTestId('search-sort').selectOption(sortOption);
+    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/);
+    await this.page.waitForResponse(/.*ClientProductGalleryQuery.*/);
   }
 
   /**
