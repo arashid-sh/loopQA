@@ -3,8 +3,8 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
-    types: [opened]
+    branches: [main, master, '*']
+    types: [opened, synchronize]
   workflow_dispatch:
 
 jobs:
