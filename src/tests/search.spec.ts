@@ -14,21 +14,18 @@ test.describe('plp', () => {
 
   test('eCMP-2123 validate sort by price, descending', async ({ page, productListPage }) => {
     await productListPage.sortBy('price_desc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeGreaterThan(prices[prices.length - 1]);
   });
 
   test('eCMP-2124 validate sort by price, ascending', async ({ page, productListPage }) => {
     await productListPage.sortBy('price_asc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
   });
 
   test('eCMP-2125 validate sort by name, A-Z', async ({ page, productListPage }) => {
     await productListPage.sortBy('name_asc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const allProductNames = await productListPage.getAllProductNames();
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1); //localCompare() returns -1 if less than, 0 if equal, 1 if great than
   });
@@ -42,7 +39,6 @@ test.describe('plp', () => {
 
   test('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {
     await productListPage.sortBy('discount_desc');
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
   });
