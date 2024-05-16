@@ -25,7 +25,7 @@ test.describe('product display page', () => {
     // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
     const selectedImage = await productDetailsPage.clickImageFromImageGallery(3);
     // this assertion verifies that the image we selected in the step above is the one being displayed as the main product image.
-    expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
+    await expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
   });
 
   test('ecmp-2959 verify quantity adjustment icons updates the number accurately @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
@@ -34,9 +34,9 @@ test.describe('product display page', () => {
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     await productDetailsPage.increaseQuantityButton.click();
-    expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '2');
+    await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '2');
     await productDetailsPage.decreaseQuantityButton.click();
-    expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '1');
+    await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '1');
   });
 
   test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing @MH @SMOKE', async ({
@@ -61,6 +61,6 @@ test.describe('product display page', () => {
     // Get total price of the item in the cart. This could be different depending on the quantity added.
     const totalPriceInCart = await extractPriceAsInteger(page.getByTestId('minicart-order-summary-subtotal-value'));
     // Verify total price in mini cart is correct.
-    expect(productPrice * Number(selectedQuantity)).toEqual(totalPriceInCart);
+    expect(productPrice * Number(selectedQuantity)).toStrictEqual(totalPriceInCart);
   });
 });

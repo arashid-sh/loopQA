@@ -34,7 +34,7 @@ export const test = base.extend<MyFixtures>({
     await use(new SignInPage(page));
   },
 
-  creditCards: async ({}, use) => {
+  creditCards: async (_, use) => {
     await use(new CreditCards());
   },
 

@@ -1,4 +1,3 @@
-import { Page, expect } from '@playwright/test';
 import { Locator } from 'playwright';
 
 export async function extractPriceAsInteger(locator: Locator): Promise<number> {

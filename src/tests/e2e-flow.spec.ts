@@ -2,7 +2,7 @@ import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
 
 config();
-test.describe('Orders', () => {
+test.describe('orders', () => {
   test('validate a user can order a product when NOT logged in @MH @SMOKE', async ({
     page,
     navBar,

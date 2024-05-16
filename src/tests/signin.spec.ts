@@ -1,9 +1,5 @@
 import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
-import { NavBar } from '../pages/components/navbar';
-import exp from 'constants';
-import { beforeEach } from 'node:test';
-import { sign } from 'crypto';
 
 config();
 
