@@ -39,7 +39,7 @@ export default defineConfig({
     video: 'retain-on-failure',
     navigationTimeout: 30000,
     actionTimeout: 30000,
-    headless: false,
+    headless: true,
     baseURL: setEnvironment(),
   },
 
