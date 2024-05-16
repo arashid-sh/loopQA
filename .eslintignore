@@ -13,4 +13,4 @@ playwright-report
 .DS_Store
 
 # YAML file
-azure-pipelines.yml
+playwright.yml
