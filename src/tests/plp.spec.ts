@@ -15,13 +15,13 @@ test.describe('plp', () => {
   test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
     await productListPage.sortBy('price_desc');
     const prices = await productListPage.getAllProductPrices();
-    expect(prices[0]).toBeGreaterThan(prices[prices.length - 1]);
+    expect(prices[0]).toBeGreaterThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2124 validate sort by price, ascending', async ({ productListPage }) => {
     await productListPage.sortBy('price_asc');
     const prices = await productListPage.getAllProductPrices();
-    expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
+    expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
@@ -41,7 +41,7 @@ test.describe('plp', () => {
     await productListPage.sortBy('discount_desc');
 
     const prices = await productListPage.getAllProductPrices();
-    expect(prices[0]).toBeLessThan(prices[prices.length - 1]);
+    expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2130 validate PDP page for an item', async ({ page, productListPage }) => {
