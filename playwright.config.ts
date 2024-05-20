@@ -55,10 +55,10 @@ export default defineConfig({
     //   use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
     // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+    // },
 
     /* Test against mobile viewports. */
     // {
