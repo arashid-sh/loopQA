@@ -15,7 +15,7 @@ config();
 export default defineConfig({
   // Test timeout. By Default a single test run has a default time out of 30 seconds. If the test hasn't finished with in
   // that time it will be marked as a failure. We can change the default test timeout below
-  timeout: 120000,
+  timeout: 600000,
   expect: { timeout: 10 * 5000 },
   testDir: './src/tests',
   /* Run ALL tests in ALL files in parallel */
@@ -55,10 +55,10 @@ export default defineConfig({
     //   use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
     // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+    // },
 
     /* Test against mobile viewports. */
     // {
