@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('plp', () => {
+test.describe.only('plp', () => {
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
@@ -13,32 +13,32 @@ test.describe('plp', () => {
   });
 
   test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
-    const prices = await productListPage.getAllProductPrices();
     await productListPage.sortBy('price_desc');
+    const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeGreaterThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2124 validate sort by price, ascending', async ({ productListPage }) => {
-    const prices = await productListPage.getAllProductPrices();
     await productListPage.sortBy('price_asc');
+    const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
-    const allProductNames = await productListPage.getAllProductNames();
     await productListPage.sortBy('name_asc');
+    const allProductNames = await productListPage.getAllProductNames();
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1); //localCompare() returns -1 if less than, 0 if equal, 1 if great than
   });
 
   test('eCMP-2126 validate sort by name, Z-A', async ({ productListPage }) => {
-    const allProductNames = await productListPage.getAllProductNames();
     await productListPage.sortBy('name_desc');
+    const allProductNames = await productListPage.getAllProductNames();
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(1);
   });
 
   test('eCMP-2127 validate sort by discount', async ({ productListPage }) => {
-    const prices = await productListPage.getAllProductPrices();
     await productListPage.sortBy('discount_desc');
+    const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
