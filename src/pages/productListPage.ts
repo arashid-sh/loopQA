@@ -50,8 +50,6 @@ export class ProductListPage {
    * @returns an array of prices
    */
   async getAllProductPrices(): Promise<number[]> {
-    // TODO: Need a better way to check that the results are done loading
-    await this.page.waitForTimeout(2000);
     // Get list of all the elements that contain the prices for each product
     const productPrices = await this.page.locator('[data-testid="product-card-selling-price"]').allTextContents();
     // Extract only the price from the array of string and convert to Int
@@ -63,8 +61,6 @@ export class ProductListPage {
    * @returns a array of products
    */
   async getAllProductNames(): Promise<string[]> {
-    await this.page.waitForTimeout(2000);
-
     return await this.page.locator('[data-testid="fs-product-card-content"] a span').allInnerTexts();
   }
 
@@ -72,7 +68,6 @@ export class ProductListPage {
    * Function gets all the product cards from the gallery
    */
   async getAllProduct(): Promise<Locator[]> {
-    await this.page.waitForTimeout(2000);
     return await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').all();
   }
 
@@ -81,7 +76,6 @@ export class ProductListPage {
    * @returns a array of products
    */
   async getFirstProductNameInGallery(): Promise<string> {
-    await this.page.waitForTimeout(2000);
     return await this.page.locator('[data-testid="fs-product-card-content"] a span').first().innerText();
   }
 }

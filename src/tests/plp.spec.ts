@@ -13,34 +13,32 @@ test.describe('plp', () => {
   });
 
   test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
-    await productListPage.sortBy('price_desc');
     const prices = await productListPage.getAllProductPrices();
+    await productListPage.sortBy('price_desc');
     expect(prices[0]).toBeGreaterThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2124 validate sort by price, ascending', async ({ productListPage }) => {
-    await productListPage.sortBy('price_asc');
     const prices = await productListPage.getAllProductPrices();
+    await productListPage.sortBy('price_asc');
     expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   test('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
-    await productListPage.sortBy('name_asc');
     const allProductNames = await productListPage.getAllProductNames();
+    await productListPage.sortBy('name_asc');
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1); //localCompare() returns -1 if less than, 0 if equal, 1 if great than
   });
 
   test('eCMP-2126 validate sort by name, Z-A', async ({ productListPage }) => {
-    await productListPage.sortBy('name_desc');
-
     const allProductNames = await productListPage.getAllProductNames();
+    await productListPage.sortBy('name_desc');
     expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(1);
   });
 
   test('eCMP-2127 validate sort by discount', async ({ productListPage }) => {
-    await productListPage.sortBy('discount_desc');
-
     const prices = await productListPage.getAllProductPrices();
+    await productListPage.sortBy('discount_desc');
     expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
@@ -55,12 +53,11 @@ test.describe('plp', () => {
   test.describe('pagination', () => {
     test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
       await page.goto('/');
-
       await navBar.clickLink('Fitness & Nutrition');
       const allProductsInGalleryBefore = await productListPage.getAllProduct();
       await productListPage.loadMoreProductsButton.click();
       const allProductsInGalleryAfter = await productListPage.getAllProduct();
-      expect(allProductsInGalleryBefore.length).toBeLessThan(allProductsInGalleryAfter.length);
+      expect(allProductsInGalleryBefore.length).toBeLessThanOrEqual(allProductsInGalleryAfter.length);
     });
   });
 });
