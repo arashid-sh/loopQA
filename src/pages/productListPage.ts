@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 
 export class ProductListPage {
   readonly page: Page;
@@ -43,6 +43,7 @@ export class ProductListPage {
   async sortBy(sortOption: string): Promise<void> {
     await this.page.getByTestId('search-sort').selectOption(sortOption);
     await this.page.waitForResponse(/.*ClientManyProductsQuery.*/);
+    await expect(this.page.getByTestId('fs-product-card-image').first()).toBeVisible();
   }
 
   /**

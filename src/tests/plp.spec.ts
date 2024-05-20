@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe.only('plp', () => {
+test.describe('plp', () => {
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
