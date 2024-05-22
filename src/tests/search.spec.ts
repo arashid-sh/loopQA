@@ -9,7 +9,7 @@ test.describe('search', () => {
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
     // wait for products to load on the product list page
-    await page.waitForResponse(/.*ClientProductGalleryQuery.*/);
+    await page.waitForResponse(/.*ClientManyProductsQuery.*/);
   });
 
   test('verify search history displays in the search bar', async ({ page, navBar }) => {
