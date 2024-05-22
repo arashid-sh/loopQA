@@ -54,5 +54,6 @@ export class NavBar {
    */
   async clickLink(link: string): Promise<void> {
     await this.page.getByRole('link', { name: `${link}` }).click();
+    await this.page.waitForResponse(/.*ClientProductGalleryQuery.*/);
   }
 }
