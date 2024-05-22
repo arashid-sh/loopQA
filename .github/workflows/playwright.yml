@@ -5,6 +5,8 @@ on:
   pull_request:
     branches: [main, master, '*']
     types: [opened, synchronize]
+   schedule:
+    - cron: '0 0 * * *' # This will run the pipeline once a day at midnight UTC
 
 jobs:
   test:
