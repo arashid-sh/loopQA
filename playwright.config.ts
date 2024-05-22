@@ -15,7 +15,7 @@ config();
 export default defineConfig({
   // Test timeout. By Default a single test run has a default time out of 30 seconds. If the test hasn't finished with in
   // that time it will be marked as a failure. We can change the default test timeout below
-  timeout: 600000,
+  timeout: 30000,
   expect: { timeout: 10 * 5000 },
   testDir: './src/tests',
   /* Run ALL tests in ALL files in parallel */
@@ -37,9 +37,9 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    navigationTimeout: 120000,
-    actionTimeout: 120000,
-    headless: true,
+    navigationTimeout: 30000,
+    actionTimeout: 30000,
+    headless: process.env.CI ? false : true,
     baseURL: setEnvironment(),
   },
 
