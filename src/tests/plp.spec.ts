@@ -51,16 +51,16 @@ test.describe('plp', () => {
     // Validate that the PDP page is for the correct product
     expect(product).toMatch((await page.getByRole('heading', { name: `${product}` }).innerText()).trim());
   });
+});
 
-  test.describe('pagination', () => {
-    test.describe.configure({ timeout: 120000 });
-    test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
-      await page.goto('/');
-      await navBar.clickLink('Fitness & Nutrition');
-      const allProductsInGalleryBefore = await productListPage.getAllProduct();
-      await productListPage.loadMoreProductsButton.click();
-      const allProductsInGalleryAfter = await productListPage.getAllProduct();
-      expect(allProductsInGalleryBefore.length).toBeLessThanOrEqual(allProductsInGalleryAfter.length);
-    });
+test.describe('pagination', () => {
+  test.describe.configure({ timeout: 120000 });
+  test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
+    await page.goto('/');
+    await navBar.clickLink('Fitness & Nutrition');
+    const allProductsInGalleryBefore = await productListPage.getAllProduct();
+    await productListPage.loadMoreProductsButton.click();
+    const allProductsInGalleryAfter = await productListPage.getAllProduct();
+    expect(allProductsInGalleryBefore.length).toBeLessThanOrEqual(allProductsInGalleryAfter.length);
   });
 });
