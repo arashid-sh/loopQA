@@ -5,8 +5,10 @@ import { config } from 'dotenv';
 config();
 
 test.describe('product display page', () => {
+  //https://playwright.dev/docs/api/class-test#test-set-timeout
+  test.describe.configure({ timeout: 120000 });
+
   test.beforeEach(async ({ page }) => {
-    test.setTimeout(120000);
     await page.goto('/');
   });
 

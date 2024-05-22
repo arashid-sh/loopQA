@@ -4,8 +4,9 @@ import { config } from 'dotenv';
 config();
 
 test.describe('plp', () => {
+  test.describe.configure({ timeout: 120000 });
+
   test.beforeEach(async ({ page, navBar }) => {
-    test.setTimeout(120000);
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
