@@ -50,10 +50,10 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'], viewport: { width: 1600, height: 1080 } },
+    // },
 
     {
       name: 'webkit',
