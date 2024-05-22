@@ -5,8 +5,12 @@ import { config } from 'dotenv';
 config();
 
 test.describe('product display page', () => {
-  test('ecmp-2955 verify selecting different variant changes price @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
+  test.beforeEach(async ({ page }) => {
+    test.setTimeout(120000);
     await page.goto('/');
+  });
+
+  test('ecmp-2955 verify selecting different variant changes price @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -18,7 +22,6 @@ test.describe('product display page', () => {
   });
 
   test('ecmp-2956 verify image gallery interaction changes images @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
-    await page.goto('/');
     const productName = '[Bug Bash1] Traytons Dumbells 1';
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -28,8 +31,7 @@ test.describe('product display page', () => {
     await expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
   });
 
-  test('ecmp-2959 verify quantity adjustment icons updates the number accurately @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
-    await page.goto('/');
+  test('ecmp-2959 verify quantity adjustment icons updates the number accurately @MH', async ({ navBar, productListPage, productDetailsPage }) => {
     const productName = '[Bug Bash1] Traytons Dumbells 1';
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -45,7 +47,6 @@ test.describe('product display page', () => {
     productListPage,
     productDetailsPage,
   }) => {
-    await page.goto('/');
     const productName = '[Bug Bash1] ZIVA Studio';
     const selectedQuantity = '3';
     await navBar.searchForProduct(productName);

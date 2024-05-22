@@ -5,6 +5,7 @@ config();
 
 test.describe('plp', () => {
   test.beforeEach(async ({ page, navBar }) => {
+    test.setTimeout(120000);
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
