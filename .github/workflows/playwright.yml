@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main, master, '*']
     types: [opened, synchronize]
-   schedule:
+  schedule:
     - cron: '0 0 * * *' # This will run the pipeline once a day at midnight UTC
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: npx playwright test
+        run: DEBUG=pw:api npx playwright test
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         if: always()
