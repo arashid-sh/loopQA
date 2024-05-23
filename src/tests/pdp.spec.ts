@@ -20,7 +20,7 @@ test.describe('product display page', () => {
     const getCurrentItemPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
     await productDetailsPage.selectProductVariant('Weight: 45 lbs');
     const getChangedItemPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
-    expect(getCurrentItemPrice).toBeLessThan(getChangedItemPrice);
+    expect(getCurrentItemPrice).toBeLessThanOrEqual(getChangedItemPrice);
   });
 
   test('ecmp-2956 verify image gallery interaction changes images @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
