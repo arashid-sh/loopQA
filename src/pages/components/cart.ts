@@ -25,6 +25,7 @@ export class Cart {
   readonly cvvField: Locator;
   readonly buyNowButton: Locator;
   readonly paymentCreditCardButton: Locator;
+  readonly cartQuantitySelector: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -52,6 +53,7 @@ export class Cart {
     this.paymentCreditCardButton = page.getByRole('link', { name: 'Credit card' });
 
     this.buyNowButton = page.getByRole('button', { name: 'Buy now', exact: true });
+    this.cartQuantitySelector = page.locator('#quantity-selector-input');
   }
 
   /**

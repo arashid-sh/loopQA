@@ -20,6 +20,8 @@ Assumptions: Mac with VSCode installed. We also use YARN in this repo.
 - Clone this repo to your local machine and navigate to the root of the folder
 - Type `npx playwright install` to install playwright browsers
 - Type `npm i` to install dependencies
+- To run all tests type `npm run test`
+- To run specific tests see the section `Helpful tool/plugins` below.
 
 ## Project Breakdown
 
