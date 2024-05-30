@@ -25,7 +25,7 @@ Assumptions: Mac with VSCode installed. We also use YARN in this repo.
 
 ## Project Breakdown
 
-All of the code is under the `src` folder. This framework uses the [page object model](https://playwright.dev/docs/pom) as a design pattern for storing selectors and performing tasks that require more than one action for a step. The main tests are in the `test` folder and the page classes are in the `pages` folder. We also use creational design patterns with playwright [fixtures](https://zoopla.blog/posts/2023/test-framework-migration/) to make using the page classes more cleaner and easier.
+All of the code is under the `src` folder. This framework uses the [page object model](https://playwright.dev/docs/pom) as a design pattern for storing selectors and performing tasks that require more than one action for a step. The main tests are in the `tests` folder and the page classes are in the `pages` folder. We also use creational design patterns with playwright [fixtures](https://zoopla.blog/posts/2023/test-framework-migration/) to make using the page classes more cleaner and easier.
 
 ## Helpful tools/plugins
 

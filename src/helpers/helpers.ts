@@ -11,8 +11,6 @@ export async function extractPriceAsInteger(locator: Locator): Promise<number> {
   // Match the currency format in the text content
   const matchedCurrency = textContent!.match(currencyRegex);
 
-  console.log('matched currency: ' + matchedCurrency);
-
   if (!matchedCurrency) {
     throw new Error('No currency format found in the text content');
   }
@@ -36,8 +34,6 @@ export async function extractNumberFromLocatorTextContent(locator: Locator): Pro
 
   // Match the number format in the text
   const matchedNumber = textContent!.match(numberRegex);
-
-  console.log('matched number: ' + matchedNumber);
 
   if (!matchedNumber) {
     throw new Error('No number format found in the text content');
