@@ -24,6 +24,8 @@ export class Cart {
   readonly cardExpYearField: Locator;
   readonly cvvField: Locator;
   readonly buyNowButton: Locator;
+  readonly paymentCreditCardButton: Locator;
+  readonly cartQuantitySelector: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -48,8 +50,10 @@ export class Cart {
     this.cardExpDateField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByLabel('Expiry date');
     this.cardExpYearField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').locator('#creditCardpayment-card-0Year');
     this.cvvField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByLabel('CVV');
+    this.paymentCreditCardButton = page.getByRole('link', { name: 'Credit card' });
 
     this.buyNowButton = page.getByRole('button', { name: 'Buy now', exact: true });
+    this.cartQuantitySelector = page.locator('#quantity-selector-input');
   }
 
   /**
@@ -90,6 +94,7 @@ export class Cart {
   }
 
   async addPaymentInfo(creditCard: CreditCard): Promise<void> {
+    await this.paymentCreditCardButton.click();
     // Switch case will click on the correct credit card type (visa, discover, etc) based on which card is being used.
     switch (true) {
       case creditCard.type.toLocaleLowerCase().includes('visa'):

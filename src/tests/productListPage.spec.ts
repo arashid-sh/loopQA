@@ -1,9 +1,9 @@
-import { expect, test } from '../lib/fixture';
+import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
 
 config();
 
-test.describe.skip('Orders', () => {
+test.describe.skip('orders', () => {
   test('validate a user can order a product when not logged in @MH @SMOKE', async ({
     page,
     navBar,
@@ -26,15 +26,7 @@ test.describe.skip('Orders', () => {
     await expect(page.getByRole('heading', { name: 'Thank you for your purchase' })).toBeVisible();
   });
 
-  test('validate a user can order a product when logged in @MH @SMOKE', async ({
-    page,
-    signInPage,
-    navBar,
-    productListPage,
-    productDetailsPage,
-    cart,
-    creditCards,
-  }) => {
+  test('validate a user can order a product when logged in @MH @SMOKE', async ({ page, signInPage, navBar, productListPage, productDetailsPage }) => {
     await page.goto('/');
     await navBar.clickSignInButton();
     await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);

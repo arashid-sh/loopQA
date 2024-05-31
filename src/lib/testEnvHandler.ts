@@ -1,7 +1,7 @@
 export const environments = {
-  whqa: '',
-  mhqa: 'https://marketplace.qa.ecmapps.net/',
-  whprod: '',
+  whqa: 'https://qa.womenshealth.ecmapps.com/',
+  mhqa: 'https://qa.menshealth.ecmapps.com/',
+  cosmoqa: 'https://qa.cosmopolitan.ecmapps.com/',
 };
 
 /**

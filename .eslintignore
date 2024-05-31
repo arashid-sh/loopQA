@@ -12,4 +12,5 @@ playwright-report
 # System Files
 .DS_Store
 
-
+# YAML file
+playwright.yml

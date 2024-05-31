@@ -4,24 +4,31 @@
   "main": "index.js",
   "license": "ISC",
   "author": "Affan Rashid <affan.rashid@hearst.com>",
+  "type": "module",
   "scripts": {
+    "test": "npx playwright test",
     "test:mhqa": "TEST_ENV=mhqa npx playwright test --grep @MH",
-    "test:mhqa-smoke": "TEST_ENV=mhqa npx playwright test --grep @MH @SMOKE"
+    "test:mhqa-smoke": "TEST_ENV=mhqa npx playwright test --grep @MH @SMOKE",
+    "lint": "npx eslint --fix . && npx prettier -w ."
   },
   "devDependencies": {
+    "@eslint/js": "^9.2.0",
     "@playwright/test": "^1.42.1",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^1.6.1",
     "husky": "^9.0.11",
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.9.0"
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.0",
     "@types/node": "^20.11.25",
     "@typescript-eslint/parser": "^7.0.0",
+    "currency.js": "^2.0.4",
     "dayjs": "^1.0.0",
-    "dotenv": "^16.0.0",
-    "eslint-plugin-playwright": "^1.0.0"
+    "dotenv": "^16.0.0"
   }
 }

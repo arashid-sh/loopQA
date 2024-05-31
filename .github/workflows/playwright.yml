@@ -3,7 +3,11 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, '*']
+    types: [opened, synchronize]
+  schedule:
+    - cron: '0 0 * * *' # This will run the pipeline once a day at midnight UTC
+
 jobs:
   test:
     timeout-minutes: 60
@@ -14,12 +18,13 @@ jobs:
         with:
           node-version: lts/*
       - name: Install dependencies
-        run: npm install -g yarn && yarn
+        run: npm ci
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: yarn test:mhqa
-      - uses: actions/upload-artifact@v4
+        run: npx playwright test
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
