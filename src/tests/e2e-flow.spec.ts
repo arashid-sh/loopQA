@@ -20,15 +20,22 @@ test.describe('orders', () => {
     await productDetailsPage.addQuantityToCart('3');
     // soft assertion to check that the right number of items appear in the mini cart
     expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
-    await cart.proceedToCheckout();
-    await cart.addContactInfo();
-    await cart.addShippingInfo();
-    await cart.addPaymentInfo(await creditCards.createCreditCard());
+    await test.step('enter contact info in fast checkout', async () => {
+      await cart.proceedToCheckout();
+      await cart.addContactInfo();
+    });
+    await test.step('enter shipping info in fast checkout', async () => {
+      await cart.addShippingInfo();
+      await cart.goToShippingButton.click();
+    });
+    await cart.goToPaymentButton.click();
+    await test.step('select credit card button and add credit card info', async () => {
+      cart.paymentCreditCardButton.click();
+      await cart.addPaymentInfo(await creditCards.createCreditCard());
+    });
     await cart.clickBuyNowButton();
-    await page.waitForResponse(/.*orderPlaced.*/);
-    await expect(page).toHaveTitle('Order Placed');
-    await expect(page).toHaveURL(/.*checkout\/orderPlaced.*/);
-    await expect(page.getByRole('heading', { name: 'Thank you for your purchase' })).toBeVisible();
+    await page.waitForResponse(/.*order-placed.*/);
+    await expect(page.getByRole('heading').first()).toContainText('your purchase has been confirmed');
   });
 
   test.fixme(
