@@ -53,9 +53,9 @@ test.describe('plp', () => {
   });
 });
 
-test.describe('pagination', () => {
+test.describe.fixme('pagination', () => {
   test.describe.configure({ timeout: 120000 });
-  test.fixme('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
+  test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
     await page.goto('/');
     await navBar.clickLink('Fitness & Nutrition');
     const allProductsInGalleryBefore = await productListPage.getAllProduct();
