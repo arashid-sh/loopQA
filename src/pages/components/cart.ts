@@ -8,20 +8,19 @@ export class Cart {
   readonly proceedToCheckoutButton: Locator;
   readonly emailAddressPreFillInputField: Locator;
   readonly emailAddressInputField: Locator;
-  readonly firstNameInputField: Locator;
-  readonly lastNameInputField: Locator;
+  readonly fullNameInputField: Locator;
   readonly phoneNumberInputField: Locator;
-  readonly continueToShippingButton: Locator;
-  readonly postalCodeInputField: Locator;
-  readonly streetAddressInputField: Locator;
+  readonly recipientNameInputField: Locator;
+
+  readonly goToShippingButton: Locator;
+  readonly zipCodeInputField: Locator;
+  readonly addressInputField: Locator;
   readonly deliveryRecipientInputField: Locator;
-  readonly continueToPaymentButton: Locator;
+  readonly goToPaymentButton: Locator;
   readonly addressCityInputField: Locator;
-  readonly addressZipInputFIeld: Locator;
   readonly cardNumberField: Locator;
   readonly cardNameField: Locator;
-  readonly cardExpDateField: Locator;
-  readonly cardExpYearField: Locator;
+  readonly cardExpField: Locator;
   readonly cvvField: Locator;
   readonly buyNowButton: Locator;
   readonly paymentCreditCardButton: Locator;
@@ -30,29 +29,25 @@ export class Cart {
   constructor(page: Page) {
     this.page = page;
     this.checkOutButton = page.getByTestId('fs-cart-sidebar').getByLabel('Shopping Cart');
-    this.proceedToCheckoutButton = page.locator('#cart-to-orderform');
-    this.emailAddressInputField = page.locator('#client-email');
-    this.firstNameInputField = page.locator('#client-first-name');
-    this.lastNameInputField = page.locator('#client-last-name');
-    this.phoneNumberInputField = page.getByPlaceholder('999-9999');
-    this.continueToShippingButton = page.locator('#go-to-shipping');
-    this.emailAddressPreFillInputField = page.locator('#client-pre-email');
+    this.proceedToCheckoutButton = page.getByRole('button', { name: 'PROCEED TO CHECKOUT' });
+    // Contact info field locators
+    this.emailAddressInputField = page.locator('#email');
+    this.fullNameInputField = page.locator('#fullName');
+    this.phoneNumberInputField = page.locator('#phoneNumber');
     // Shipping info field locators
-    this.postalCodeInputField = page.locator('#shipping-data #ship-postalCode');
-    this.streetAddressInputField = page.locator('#shipping-data #ship-street');
-    this.deliveryRecipientInputField = page.locator('#shipping-data #ship-receiverName');
-    this.continueToPaymentButton = page.locator('#shipping-data #btn-go-to-payment');
-    this.addressCityInputField = page.getByLabel('City');
-    this.addressZipInputFIeld = page.locator('#shipping-data #ship-state');
+    this.recipientNameInputField = page.locator('#receiverName');
+    this.addressInputField = page.locator('#street');
+    this.addressCityInputField = page.locator('#city');
+    this.zipCodeInputField = page.locator('#postalCode');
+    this.goToShippingButton = page.locator('button', { hasText: 'Go to shipping' });
     // Credit card field locators
-    this.cardNumberField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByTestId('creditCardpayment-card-0Number');
-    this.cardNameField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByLabel('Name on card');
-    this.cardExpDateField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByLabel('Expiry date');
-    this.cardExpYearField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').locator('#creditCardpayment-card-0Year');
-    this.cvvField = page.frameLocator('#iframe-placeholder-creditCardPaymentGroup iframe').getByLabel('CVV');
-    this.paymentCreditCardButton = page.getByRole('link', { name: 'Credit card' });
-
-    this.buyNowButton = page.getByRole('button', { name: 'Buy now', exact: true });
+    this.goToPaymentButton = page.getByRole('button', { name: 'Go to payment' });
+    this.paymentCreditCardButton = page.getByRole('button', { name: 'Credit card Amex, Visa,' });
+    this.cardNumberField = page.locator('#cardNumber');
+    this.cardNameField = page.locator('#holderName');
+    this.cardExpField = page.locator('#expirationDate');
+    this.cvvField = page.locator('#securityCode');
+    this.buyNowButton = page.getByRole('button', { name: 'BUY NOW' });
     this.cartQuantitySelector = page.locator('#quantity-selector-input');
   }
 
@@ -62,61 +57,41 @@ export class Cart {
   async proceedToCheckout(): Promise<void> {
     await this.checkOutButton.click();
     await this.proceedToCheckoutButton.first().click();
-    await this.emailAddressPreFillInputField.fill(faker.internet.email());
-    await this.page.locator('#btn-client-pre-email').click();
   }
 
   /**
    * Function clicks on the sign in button on home page.
    */
   async addContactInfo(): Promise<void> {
-    await this.firstNameInputField.click();
-    await this.firstNameInputField.pressSequentially(faker.person.firstName(), { delay: 100 });
-    await this.lastNameInputField.pressSequentially(faker.person.lastName(), { delay: 100 });
+    await this.emailAddressInputField.fill(faker.internet.email());
+    await this.fullNameInputField.fill(faker.person.firstName() + ' ' + faker.person.lastName());
     // Note as of right now faker.phone.number() generates random phone numbers, sometimes with extensions
     // This a fix in the works https://github.com/faker-js/faker/issues/1542 that should fix this.
-    await this.phoneNumberInputField.waitFor({ timeout: 1000 });
-    await this.phoneNumberInputField.pressSequentially('818-654-8164', { delay: 100 });
-    await this.continueToShippingButton.click();
+    await this.phoneNumberInputField.fill('818-654-8164');
   }
 
   /**
    * Function fills out the shipping info.
    */
   async addShippingInfo(): Promise<void> {
-    await this.postalCodeInputField.pressSequentially('96815', { delay: 100 });
-    // Shipping frame loads again once you input a zip code. Tried to wait for visible elements, classes but
-    // a hard wait was the last solution that worked consistently
-    await this.page.waitForTimeout(5000);
-    await this.streetAddressInputField.pressSequentially('1777 Ala Moana Blvd, Apt 601', { delay: 100 });
-    await this.deliveryRecipientInputField.pressSequentially(faker.person.fullName());
-    await this.continueToPaymentButton.click();
+    await this.addressInputField.fill('1777 Ala Moana Blvd, Apt 601');
+    await this.page.getByLabel('State').selectOption('HI');
+    await this.addressCityInputField.fill('Honolulu');
+    await this.zipCodeInputField.fill('96815');
   }
 
+  /**
+   * This function takes the credit card provided and fills the appropriate fields in fast checkout
+   * @param creditCard : the credit card you randomly send by calling await creditCards.createCreditCard() function
+   *
+   * @example
+   * await cart.addPaymentInfo(await creditCards.createCreditCard());
+   */
   async addPaymentInfo(creditCard: CreditCard): Promise<void> {
-    await this.paymentCreditCardButton.click();
-    // Switch case will click on the correct credit card type (visa, discover, etc) based on which card is being used.
-    switch (true) {
-      case creditCard.type.toLocaleLowerCase().includes('visa'):
-        await this.page.locator('span', { hasText: 'Visa' }).click;
-        break;
-      case creditCard.type.toLocaleLowerCase().includes('discover'):
-        await this.page.locator('span', { hasText: 'Discover' }).click;
-        break;
-      case creditCard.type.toLocaleLowerCase().includes('AMEX'):
-        await this.page.locator('span', { hasText: 'American Express' }).click;
-        break;
-      case creditCard.type.toLocaleLowerCase().includes('MC'):
-        await this.page.locator('span', { hasText: 'Mastercard' }).click;
-        break;
-    }
-
-    await this.cardNumberField.fill(creditCard.number);
-    await this.cardNameField.fill(faker.person.fullName());
-    await this.cardExpDateField.selectOption(creditCard.expMo);
-    await this.cardExpYearField.selectOption(creditCard.expYr);
+    await this.cardNumberField.pressSequentially(creditCard.number, { delay: 500 });
+    await this.cardNameField.fill(faker.person.firstName() + ' ' + faker.person.lastName());
+    await this.cardExpField.fill(creditCard.expDate);
     await this.cvvField.fill(creditCard.securityCode);
-    await this.page.waitForTimeout(3000);
   }
 
   /**
