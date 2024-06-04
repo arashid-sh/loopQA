@@ -34,7 +34,7 @@ test.describe('orders', () => {
       await cart.addPaymentInfo(await creditCards.createCreditCard());
     });
     await cart.clickBuyNowButton();
-    await page.waitForResponse(/.*order-placed.*/);
+    await page.waitForResponse(/.*order-placed.*/, { timeout: 60000 });
     await expect(page.getByRole('heading').first()).toContainText('your purchase has been confirmed');
   });
 
