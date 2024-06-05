@@ -15,9 +15,11 @@ on:
         required: true
         default: 'whqa'
 
+run-name: Running tests on environement ${{github.event.inputs.environment}}
+
 jobs:
   test:
-    name: "Running tests on [environement: ${{github.event.inputs.environment || 'whqa'}}]"
+    name: 'Running tests on [environement: ${{github.event.inputs.environment}}]'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
