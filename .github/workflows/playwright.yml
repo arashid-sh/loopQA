@@ -17,6 +17,7 @@ on:
 
 jobs:
   test:
+    name: "Running tests on [environement: ${{github.event.inputs.environment || 'whqa'}}]"
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
