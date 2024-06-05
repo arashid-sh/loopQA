@@ -15,7 +15,7 @@ on:
         required: true
         default: 'whqa'
 
-run-name: Running tests on environement':' ${{github.event.inputs.environment || 'whqa'}}
+run-name: Running tests on environement = ${{github.event.inputs.environment || 'whqa'}}
 
 jobs:
   test:
