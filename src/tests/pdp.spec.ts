@@ -28,7 +28,7 @@ test.describe('product display page', () => {
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
-    const selectedImage = await productDetailsPage.clickImageFromImageGallery(3);
+    const selectedImage = await productDetailsPage.clickImageFromImageGallery(1);
     // this assertion verifies that the image we selected in the step above is the one being displayed as the main product image.
     await expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
   });
