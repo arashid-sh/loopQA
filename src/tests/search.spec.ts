@@ -9,7 +9,6 @@ test.describe('search', () => {
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
     // wait for products to load on the product list page
-    await page.waitForResponse(/.*ClientManyProductsQuery.*/);
     await navBar.searchInputField.focus();
     await navBar.searchInputField.click();
   });
@@ -26,5 +25,10 @@ test.describe('search', () => {
   test('verify search auto complete suggestions', async ({ page, navBar }) => {
     await navBar.searchInputField.fill('t');
     await expect(page.getByTestId('fs-search-auto-complete')).toBeVisible();
+  });
+
+  test('verify searching for a keyword that returns no results, async', async ({ page, navBar }) => {
+    await navBar.searchForProduct('random&*43');
+    await expect(page.getByText('Nothing matches with your')).toBeVisible();
   });
 });

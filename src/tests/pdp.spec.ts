@@ -24,17 +24,17 @@ test.describe('product display page', () => {
   });
 
   test('ecmp-2956 verify image gallery interaction changes images @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
-    const productName = '[Bug Bash1] Traytons Dumbells 1';
+    const productName = "[bug Bash1] Trayton's Treadmill Test 3";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
-    const selectedImage = await productDetailsPage.clickImageFromImageGallery(3);
+    const selectedImage = await productDetailsPage.clickImageFromImageGallery(1);
     // this assertion verifies that the image we selected in the step above is the one being displayed as the main product image.
     await expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
   });
 
   test('ecmp-2959 verify quantity adjustment icons updates the number accurately @MH', async ({ navBar, productListPage, productDetailsPage }) => {
-    const productName = '[Bug Bash1] Traytons Dumbells 1';
+    const productName = "[bug Bash1] Trayton's Treadmill Test 3";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     await productDetailsPage.increaseQuantityButton.click();

@@ -48,6 +48,10 @@ export class NavBar {
     await this.page.getByRole('link', { name: `${menuOption}` }).click();
   }
 
+  async clickSearchBar(): Promise<void> {
+    await this.searchInputField.click();
+  }
+
   /**
    * Function clicks on the given links in the navigation bar e.g "Books & Guides", "Grooming", etc
    * @param link The link you want to click on

@@ -64,7 +64,7 @@ export class Cart {
    */
   async addContactInfo(): Promise<void> {
     await this.emailAddressInputField.fill(faker.internet.email());
-    await this.fullNameInputField.fill(faker.person.firstName() + ' ' + faker.person.lastName());
+    await this.fullNameInputField.fill(faker.person.firstName() + ' ' + 'test');
     // Note as of right now faker.phone.number() generates random phone numbers, sometimes with extensions
     // This a fix in the works https://github.com/faker-js/faker/issues/1542 that should fix this.
     await this.phoneNumberInputField.fill('818-654-8164');

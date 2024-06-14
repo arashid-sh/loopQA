@@ -14,9 +14,15 @@ on:
         description: 'The environment to run the Playwright tests in'
         required: true
         default: 'whqa'
+      tags:
+        description: 'Optional tags to filter Playwright tests'
+        required: false
+
+run-name: Running tests on environement = ${{github.event.inputs.environment || 'whqa'}}
 
 jobs:
   test:
+    name: 'Running tests on [environment: ${{ github.event.inputs.environment || 'whqa' }}]'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +35,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: TEST_ENV=${{ github.event.inputs.environment || 'whqa' }} npx playwright test
+        run: |
+          if [ -n "${{ github.event.inputs.tags }}" ]; then
+            TEST_ENV=${{ github.event.inputs.environment || 'whqa' }} npx playwright test -g '${{ github.event.inputs.tags }}'
+          else
+            TEST_ENV=${{ github.event.inputs.environment || 'whqa' }} npx playwright test
+          fi
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         if: always()

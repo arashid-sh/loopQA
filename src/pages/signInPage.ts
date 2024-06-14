@@ -9,6 +9,8 @@ export class SignInPage {
   readonly continueButton: Locator;
   readonly forgotPasswordLink: Locator;
   readonly returnToSignInLink: Locator;
+  readonly forgotPasswordSendButton: Locator;
+  readonly tryAgainLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,6 +20,8 @@ export class SignInPage {
     this.continueButton = page.getByTestId('LandingFormButton');
     this.forgotPasswordLink = page.getByRole('link', { name: 'Forgot or need a password?' });
     this.returnToSignInLink = page.getByRole('link', { name: 'Return to Sign In' });
+    this.forgotPasswordSendButton = page.getByRole('button', { name: 'SEND' });
+    this.tryAgainLink = page.getByRole('link', { name: 'Try again' });
   }
 
   /**
