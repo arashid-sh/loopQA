@@ -1,3 +1,4 @@
+import { sign } from 'crypto';
 import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
 
@@ -43,7 +44,7 @@ test.describe('sign in', () => {
 
   test('verify clicking "Forgot Password" link redirects the user to Forgot Password page', async ({ page, signInPage }) => {
     await signInPage.emailInputField.fill(process.env.EMAIL!);
-
+    await signInPage.forgotPasswordLink.click();
     await expect(page).toHaveURL(/forgot-password/);
   });
 
@@ -62,7 +63,7 @@ test.describe('sign in', () => {
     await expect(page.getByText('If an account with this email')).toBeVisible();
   });
 
-  test('Verify user is taken back to Forgot Password page on clicking Try Again link', async ({ page, signInPage }) => {
+  test('Verify user is taken back to Forgot Password page on clicking Try Again link', async ({ signInPage }) => {
     await signInPage.forgotPasswordLink.click();
     await signInPage.emailInputField.fill(process.env.EMAIL!);
     await signInPage.forgotPasswordSendButton.click();
