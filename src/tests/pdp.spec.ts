@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('product display page', () => {
+test.describe('product display page', { tag: '@faststore' }, () => {
   //https://playwright.dev/docs/api/class-test#test-set-timeout
   test.describe.configure({ timeout: 120000 });
 
@@ -12,7 +12,7 @@ test.describe('product display page', () => {
     await page.goto('/');
   });
 
-  test('ecmp-2955 verify selecting different variant changes price @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
+  test('ecmp-2955 verify selecting different variant changes price', async ({ page, navBar, productListPage, productDetailsPage }) => {
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -23,7 +23,7 @@ test.describe('product display page', () => {
     expect(getCurrentItemPrice).toBeLessThanOrEqual(getChangedItemPrice);
   });
 
-  test('ecmp-2956 verify image gallery interaction changes images @MH', async ({ page, navBar, productListPage, productDetailsPage }) => {
+  test('ecmp-2956 verify image gallery interaction changes images', async ({ page, navBar, productListPage, productDetailsPage }) => {
     const productName = "[bug Bash1] Trayton's Treadmill Test 3";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -33,7 +33,7 @@ test.describe('product display page', () => {
     await expect(page.locator('[data-testid="fs-image-gallery"] img').nth(0)).toHaveAttribute('alt', selectedImage as string);
   });
 
-  test('ecmp-2959 verify quantity adjustment icons updates the number accurately @MH', async ({ navBar, productListPage, productDetailsPage }) => {
+  test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ navBar, productListPage, productDetailsPage }) => {
     const productName = "[bug Bash1] Trayton's Treadmill Test 3";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -43,7 +43,7 @@ test.describe('product display page', () => {
     await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '1');
   });
 
-  test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing @MH @SMOKE', async ({
+  test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing', async ({
     page,
     navBar,
     productListPage,

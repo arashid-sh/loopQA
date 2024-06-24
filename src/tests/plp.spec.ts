@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('plp', () => {
+test.describe('plp', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 120000 });
 
   test.beforeEach(async ({ page, navBar }) => {
@@ -53,7 +53,7 @@ test.describe('plp', () => {
   });
 });
 
-test.describe.fixme('pagination', () => {
+test.describe.fixme('pagination', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 120000 });
   test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
     await page.goto('/');
