@@ -1,10 +1,9 @@
-import { sign } from 'crypto';
 import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
 
 config();
 
-test.describe('sign in', () => {
+test.describe('sign in', { tag: '@faststore' }, () => {
   test.beforeEach(async ({ page, navBar }, testInfo) => {
     // Changing time out for these tests as they run longer on safari webkit on CI.
     testInfo.setTimeout(testInfo.timeout + 60000);
