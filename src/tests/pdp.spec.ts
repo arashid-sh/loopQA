@@ -24,7 +24,7 @@ test.describe('product display page', { tag: '@faststore' }, () => {
   });
 
   test('ecmp-2956 verify image gallery interaction changes images', async ({ page, navBar, productListPage, productDetailsPage }) => {
-    const productName = "[bug Bash1] Trayton's Treadmill Test 3";
+    const productName = "[bug Bash1] Trayton's Treadmill Test 2";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
@@ -34,7 +34,7 @@ test.describe('product display page', { tag: '@faststore' }, () => {
   });
 
   test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ navBar, productListPage, productDetailsPage }) => {
-    const productName = "[bug Bash1] Trayton's Treadmill Test 3";
+    const productName = "[bug Bash1] Trayton's Treadmill Test 2";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     await productDetailsPage.increaseQuantityButton.click();

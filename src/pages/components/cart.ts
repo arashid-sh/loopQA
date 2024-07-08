@@ -25,6 +25,7 @@ export class Cart {
   readonly buyNowButton: Locator;
   readonly paymentCreditCardButton: Locator;
   readonly cartQuantitySelector: Locator;
+  readonly removeButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -49,6 +50,7 @@ export class Cart {
     this.cvvField = page.locator('#securityCode');
     this.buyNowButton = page.getByRole('button', { name: 'BUY NOW' });
     this.cartQuantitySelector = page.locator('#quantity-selector-input');
+    this.removeButton = page.getByTestId('remove-button');
   }
 
   /**
