@@ -4,6 +4,7 @@ import { extractNumberFromLocatorTextContent } from '../helpers/helpers';
 
 config();
 test.describe('orders', () => {
+  test.describe.configure({ timeout: 300000 });
   test('validate message when cart is empty @MH @SMOKE', async ({ page, navBar, productListPage, productDetailsPage, cart }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";

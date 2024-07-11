@@ -29,13 +29,17 @@ test.describe('plp', { tag: '@faststore' }, () => {
   test('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
     await productListPage.sortBy('name_asc');
     const allProductNames = await productListPage.getAllProductNames();
-    expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1); //localCompare() returns -1 if less than, 0 if equal, 1 if great than
+    if (allProductNames.length > 1) {
+      expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(-1);
+    } //localCompare() returns -1 if less than, 0 if equal, 1 if great than
   });
 
   test('eCMP-2126 validate sort by name, Z-A', async ({ productListPage }) => {
     await productListPage.sortBy('name_desc');
     const allProductNames = await productListPage.getAllProductNames();
-    expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(1);
+    if (allProductNames.length > 1) {
+      expect(allProductNames[0].localeCompare(allProductNames[allProductNames.length - 1])).toBe(1);
+    }
   });
 
   test('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {

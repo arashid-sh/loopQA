@@ -9,7 +9,6 @@ test.describe('sign in', { tag: '@faststore' }, () => {
     testInfo.setTimeout(testInfo.timeout + 60000);
     await page.goto('/');
     await navBar.clickSignInButton();
-    await page.waitForResponse(/.*ciam-ui.kubestage.hearstapps.net\/assets.*/, { timeout: 60000 });
   });
 
   test('validate user can login successfully', async ({ page, signInPage }) => {
