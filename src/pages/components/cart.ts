@@ -91,6 +91,8 @@ export class Cart {
    */
   async addPaymentInfo(creditCard: CreditCard): Promise<void> {
     await this.cardNumberField.pressSequentially(creditCard.number, { delay: 500 });
+    // Wait for checkout to determine what credit card is being used (MC, VISA, AMEX, etc)
+    await this.page.waitForTimeout(1000);
     await this.cardNameField.fill(faker.person.firstName() + ' ' + faker.person.lastName());
     await this.cardExpField.fill(creditCard.expDate);
     await this.cvvField.fill(creditCard.securityCode);
