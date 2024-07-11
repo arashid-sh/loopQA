@@ -25,7 +25,7 @@ export class ProductDetailsPage {
    * @param productName
    */
   async addQuantityToCart(quantity: string): Promise<void> {
-    await this.quantityInputField.fill(quantity);
+    await this.quantityInputField.fill(quantity, { timeout: 120000 });
     await this.addToCartButton.click({ delay: 1000 });
   }
 
