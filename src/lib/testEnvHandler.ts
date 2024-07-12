@@ -1,5 +1,5 @@
 export const environments = {
-  whqa: 'https://qa.womenshealth.ecmapps.com/',
+  womenshealthqa: 'https://qa.womenshealth.ecmapps.com/',
   menshealthqa: 'https://qa.menshealth.ecmapps.com/',
   cosmoqa: 'https://qa.cosmopolitan.ecmapps.com/',
 };
@@ -12,6 +12,6 @@ export function setEnvironment(): string {
   try {
     return environments[process.env.TEST_ENV!];
   } catch {
-    throw Error('Invalid TEST_ENV enviornment variable');
+    throw Error('Invalid TEST_ENV environment variable');
   }
 }

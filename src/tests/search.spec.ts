@@ -29,6 +29,6 @@ test.describe('search', { tag: '@faststore' }, () => {
 
   test('verify searching for a keyword that returns no results, async', async ({ page, navBar }) => {
     await navBar.searchForProduct('random&*43');
-    await expect(page.getByText('Nothing matches with your')).toBeVisible();
+    await expect(page.getByTestId('fs-empty-state')).toBeVisible();
   });
 });

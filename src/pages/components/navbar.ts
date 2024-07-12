@@ -22,6 +22,7 @@ export class NavBar {
    */
   async clickSignInButton(): Promise<void> {
     await this.signInButton.click();
+    await this.page.waitForResponse(/.*ciam-ui.kubestage.hearstapps.net\/assets.*/, { timeout: 60000 });
   }
 
   /**
@@ -35,7 +36,7 @@ export class NavBar {
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
     } else {
-      await this.searchInputField.fill(productName);
+      await this.searchInputField.fill(productName, { timeout: 120000 });
       await this.searchButton.click();
     }
   }
