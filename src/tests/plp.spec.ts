@@ -10,8 +10,6 @@ test.describe('plp', { tag: '@faststore' }, () => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
-    // wait for products to load on the product list page
-    await page.waitForResponse(/.*ClientManyProductsQuery.*/);
   });
 
   test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
