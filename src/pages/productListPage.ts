@@ -23,6 +23,14 @@ export class ProductListPage {
     await product.click();
   }
 
+  /**
+   * Function selects the first item being displayed on the PLP page.
+   */
+  async selectFirstProductFromList(): Promise<void> {
+    await this.page.getByTestId('fs-product-card').first().click();
+    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+  }
+
   // /**
   //  * Filter the products by the given filter
   //  * @param isMobile variable determines if the test is being run on mobile

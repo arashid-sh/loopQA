@@ -35,9 +35,11 @@ export class NavBar {
       await this.mobileSearchButton.click();
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
     } else {
       await this.searchInputField.fill(productName, { timeout: 120000 });
       await this.searchButton.click();
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
     }
   }
 
