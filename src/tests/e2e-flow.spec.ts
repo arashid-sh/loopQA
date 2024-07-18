@@ -54,7 +54,7 @@ test.describe('orders', () => {
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
     await productDetailsPage.addQuantityToCart('1');
-    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
+    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('1');
     await cart.proceedToCheckout();
     await cart.goToShippingButton.click();
     await cart.goToPaymentButton.click();
