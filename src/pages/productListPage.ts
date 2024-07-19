@@ -28,7 +28,12 @@ export class ProductListPage {
    */
   async selectFirstProductFromList(): Promise<void> {
     await this.page.getByTestId('fs-product-card').first().click();
-    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    try {
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    } catch (error) {
+      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+      throw error;
+    }
   }
 
   // /**
@@ -50,7 +55,12 @@ export class ProductListPage {
    */
   async sortBy(sortOption: string): Promise<void> {
     await this.page.getByTestId('search-sort').selectOption(sortOption);
-    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/);
+    try {
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    } catch (error) {
+      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+      throw error;
+    }
     await expect(this.page.getByTestId('fs-product-card-image').first()).toBeVisible();
   }
 
