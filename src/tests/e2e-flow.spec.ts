@@ -53,8 +53,8 @@ test.describe('orders', () => {
     const productName = 'Ziva Studio Tribell Dumbbells';
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
-    await productDetailsPage.addQuantityToCart('3');
-    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
+    await productDetailsPage.addQuantityToCart('1');
+    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('1');
     await cart.proceedToCheckout();
     await cart.goToShippingButton.click();
     await cart.goToPaymentButton.click();

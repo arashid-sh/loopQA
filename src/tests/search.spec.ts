@@ -27,8 +27,9 @@ test.describe('search', { tag: '@faststore' }, () => {
     await expect(page.getByTestId('fs-search-auto-complete')).toBeVisible();
   });
 
-  test('verify searching for a keyword that returns no results, async', async ({ page, navBar }) => {
-    await navBar.searchForProduct('random&*43');
+  test('verify searching for a keyword that returns no results', async ({ page, navBar }) => {
+    await navBar.searchInputField.fill('random&*43', { timeout: 120000 });
+    await navBar.searchButton.click();
     await expect(page.getByTestId('fs-empty-state')).toBeVisible();
   });
 });

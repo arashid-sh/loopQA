@@ -23,6 +23,19 @@ export class ProductListPage {
     await product.click();
   }
 
+  /**
+   * Function selects the first item being displayed on the PLP page.
+   */
+  async selectFirstProductFromList(): Promise<void> {
+    await this.page.getByTestId('fs-product-card').first().click();
+    try {
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    } catch (error) {
+      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+      throw error;
+    }
+  }
+
   // /**
   //  * Filter the products by the given filter
   //  * @param isMobile variable determines if the test is being run on mobile
@@ -42,7 +55,12 @@ export class ProductListPage {
    */
   async sortBy(sortOption: string): Promise<void> {
     await this.page.getByTestId('search-sort').selectOption(sortOption);
-    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/);
+    try {
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    } catch (error) {
+      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+      throw error;
+    }
     await expect(this.page.getByTestId('fs-product-card-image').first()).toBeVisible();
   }
 

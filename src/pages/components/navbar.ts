@@ -35,9 +35,21 @@ export class NavBar {
       await this.mobileSearchButton.click();
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
+      try {
+        await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      } catch (error) {
+        console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+        throw error;
+      }
     } else {
       await this.searchInputField.fill(productName, { timeout: 120000 });
       await this.searchButton.click();
+      try {
+        await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      } catch (error) {
+        console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+        throw error;
+      }
     }
   }
 
@@ -59,6 +71,11 @@ export class NavBar {
    */
   async clickLink(link: string): Promise<void> {
     await this.page.getByRole('link', { name: `${link}` }).click();
-    await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    try {
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+    } catch (error) {
+      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
+      throw error;
+    }
   }
 }
