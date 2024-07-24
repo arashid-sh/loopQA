@@ -2,7 +2,7 @@ export const environments = {
   womenshealthqa: 'https://qa.womenshealth.ecmapps.com/',
   menshealthqa: 'https://qa.menshealth.ecmapps.com/',
   cosmopolitanqa: 'https://qa.cosmopolitan.ecmapps.com/',
-  harpersbazaarqa: 'https://qa.cosmopolitan.ecmapps.com/',
+  harpersbazaarqa: 'https://qa.harpersbazaar.ecmapps.com/',
 };
 
 /**
