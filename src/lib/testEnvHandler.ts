@@ -1,7 +1,8 @@
 export const environments = {
   womenshealthqa: 'https://qa.womenshealth.ecmapps.com/',
   menshealthqa: 'https://qa.menshealth.ecmapps.com/',
-  cosmoqa: 'https://qa.cosmopolitan.ecmapps.com/',
+  cosmopolitanqa: 'https://qa.cosmopolitan.ecmapps.com/',
+  harpersbazaarqa: 'https://qa.harpersbazaar.ecmapps.com/',
 };
 
 /**
