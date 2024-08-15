@@ -18,9 +18,9 @@ test.describe('product display page', { tag: '@faststore' }, () => {
     await productListPage.selectProduct(productName);
     // logic below will extract just the number from the text that is returned: 'Selling Price:$45.00' to '45.00'
     const getCurrentItemPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
-    await productDetailsPage.selectProductVariant('Weight: 45 lbs');
+    await productDetailsPage.selectProductVariant('45 lbs');
     const getChangedItemPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
-    expect(getCurrentItemPrice).toBeLessThanOrEqual(getChangedItemPrice);
+    expect(getCurrentItemPrice).not.toBe(getChangedItemPrice);
   });
 
   test('ecmp-2956 verify image gallery interaction changes images', async ({ page, navBar, productListPage, productDetailsPage }) => {
