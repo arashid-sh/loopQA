@@ -34,7 +34,7 @@ export class ProductDetailsPage {
    * @variant could be the size, color, etc
    */
   async selectProductVariant(variant: string): Promise<void> {
-    await this.page.getByRole('link', { name: variant }).waitFor();
+    await this.page.getByTestId('fs-dropdown-button').click();
     await this.page.getByRole('link', { name: variant }).click();
     //making playwright wait so the price changes when a new variant is selected.
     await this.page.waitForTimeout(500);
