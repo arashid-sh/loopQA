@@ -17,14 +17,17 @@ on:
       tags:
         description: 'Optional tags to filter Playwright tests.'
         required: false
-      repo:
-        description: 'Optional parameter that should be sent by the triggering repo.'
+      branch:
+        description: 'Optional paramater. This is the branch name that will be sent by the triggering branch.'
         required: false
-      prauthor:
+      repo:
+        description: 'Optional parameter. This will be the name of the repo.'
+        required: false
+      pr_author:
         description: 'Optional parameter. This parameter should send the PR author of the triggering repo.'
         required: false
 
-run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.repo}}
+run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.branch}}
 
 jobs:
   test:
