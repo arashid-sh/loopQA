@@ -15,16 +15,16 @@ on:
         required: true
         default: 'whqa'
       tags:
-        description: 'Optional tags to filter Playwright tests'
+        description: 'Optional tags to filter Playwright tests.'
         required: false
       repo:
-        description: 'Optional parameter that should be sent by the triggering repo'
+        description: 'Optional parameter that should be sent by the triggering repo.'
         required: false
-      pr_author:
+      prauthor:
         description: 'Optional parameter. This parameter should send the PR author of the triggering repo.'
         required: false
 
-run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.input.repo}}
+run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.repo}}
 
 jobs:
   test:
