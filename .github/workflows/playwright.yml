@@ -17,6 +17,8 @@ on:
       tags:
         description: 'Optional tags to filter Playwright tests'
         required: false
+  repository_dispatch:
+    types: [run-test]
 
 run-name: Running tests on environement = ${{github.event.inputs.environment || 'whqa'}}
 
