@@ -20,11 +20,11 @@ on:
   repository_dispatch:
     types: [run-test]
 
-run-name: Running tests on environement = ${{ github.event.client_payload.environment || 'whqa'}}
+run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}}
 
 jobs:
   test:
-    name: "Running tests on [environment: ${{  github.event.client_payload.environment || 'whqa'}}]"
+    name: "Running tests on [environment: ${{ github.event.inputs.environmen || 'womenshealthqa'}}]"
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -39,9 +39,9 @@ jobs:
       - name: Run Playwright tests
         run: |
           if [ -n "${{ github.event.inputs.tags }}" ]; then
-            TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test -g '${{ github.event.inputs.tags }}'
+            TEST_ENV=${{ github.event.inputs.environmen || 'womenshealthqa' }} npx playwright test -g '${{ github.event.inputs.tags }}'
           else
-            TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test
+            TEST_ENV=${{ github.event.inputs.environmen || 'womenshealthqa' }} npx playwright test
           fi
       - name: upload artifacts
         uses: actions/upload-artifact@v4
