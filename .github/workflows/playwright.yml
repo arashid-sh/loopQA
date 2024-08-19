@@ -20,11 +20,11 @@ on:
   repository_dispatch:
     types: [run-test]
 
-run-name: Running tests on environement = ${{github.event.inputs.environment || 'whqa'}}
+run-name: Running tests on environement = ${{ github.event.client_payload.environment || 'whqa'}}
 
 jobs:
   test:
-    name: "Running tests on [environment: ${{ github.event.inputs.environment || 'whqa'}}]"
+    name: "Running tests on [environment: ${{  github.event.client_payload.environment || 'whqa'}}]"
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
