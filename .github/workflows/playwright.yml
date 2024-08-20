@@ -27,7 +27,7 @@ on:
         description: 'Optional parameter. This parameter should send the PR author of the triggering repo.'
         required: false
 
-run-name: Running tests on environement = ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.branch}}
+run-name: Running tests on ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.events.input.repo }}/${{ github.event.inputs.branch}}
 
 jobs:
   test:
