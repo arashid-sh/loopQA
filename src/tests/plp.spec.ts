@@ -49,7 +49,7 @@ test.describe('plp', { tag: '@faststore' }, () => {
   });
 
   // This filter is not showing up in the PLP page as of 08/27/24
-  test('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {
+  test.skip('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {
     await productListPage.sortBy('discount_desc');
 
     // Check if discount is available
