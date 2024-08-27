@@ -3,9 +3,9 @@ import { config } from 'dotenv';
 import { extractNumberFromLocatorTextContent } from '../helpers/helpers';
 
 config();
-test.describe('orders', () => {
+test.describe('orders', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 300000 });
-  test('validate message when cart is empty @MH @SMOKE', async ({ page, navBar, productListPage, productDetailsPage, cart }) => {
+  test('validate message when cart is empty', async ({ page, navBar, productListPage, productDetailsPage, cart }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
