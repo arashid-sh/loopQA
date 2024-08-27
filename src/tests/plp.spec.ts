@@ -12,6 +12,12 @@ test.describe('plp', { tag: '@faststore' }, () => {
     await navBar.searchForProduct(productName);
   });
 
+  [{ component: 'desktop-fs-filter-container' }, { component: 'search-sort' }].forEach(({ component }) => {
+    test(`validate ${component} component exists`, async ({ page }) => {
+      await expect(page.getByTestId(component).first()).toBeVisible();
+    });
+  });
+
   test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
     await productListPage.sortBy('price_desc');
     const prices = await productListPage.getAllProductPrices();
