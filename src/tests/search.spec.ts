@@ -33,3 +33,47 @@ test.describe('search', { tag: '@faststore' }, () => {
     await expect(page.getByTestId('fs-empty-state')).toBeVisible();
   });
 });
+
+test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
+  test.describe.configure({ timeout: 120000 });
+  test('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
+    await page.goto('/');
+    // Get all categories from the nav bar e.g Subscribe, fitness, etc
+    const categories = await navBar.getAllNavBarCategoryLinks();
+    const outOfStockItems: string[] = [];
+    // Go through each category
+    for await (const category of categories) {
+      await category.click();
+      // wait for the page to load
+      await page.waitForTimeout(5000);
+      // This will check if the product list page exits on the page. Some categories like Subscribe and Featured Brands don't have PLP pages.
+      const ele = page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first();
+      if (await ele.isVisible({ timeout: 2000 })) {
+        // If the PLP does exist
+        const isEnabled = await ele.isEnabled();
+        if (isEnabled) {
+          // Get all products listed on the page
+          const products = await productListPage.getAllProducts();
+          for await (const product of products) {
+            await product.click();
+            // wait for product details page to load
+            await page.waitForSelector('[data-fs-product-details-title="true"], [data-testid="buy-button"]');
+            // Check if product is out of stock, if it is, store the name of the product
+            const isOutOfStock = await page.getByText('Out of Stock').isVisible();
+            if (isOutOfStock) {
+              // Get the name of the out of stock item
+              outOfStockItems.push(await page.locator('[data-fs-product-name="true"]').innerText());
+            }
+            await page.goBack();
+          }
+        }
+      }
+      await page.goBack();
+    }
+
+    if (outOfStockItems.length > 0) {
+      console.log('The following items are out of stock', outOfStockItems);
+      expect(outOfStockItems.length).toBe(0);
+    }
+  });
+});

@@ -75,9 +75,9 @@ test.describe.fixme('pagination', { tag: '@faststore' }, () => {
   test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
     await page.goto('/');
     await navBar.clickLink('Fitness & Nutrition');
-    const allProductsInGalleryBefore = await productListPage.getAllProduct();
+    const allProductsInGalleryBefore = await productListPage.getAllProducts();
     await productListPage.loadMoreProductsButton.click();
-    const allProductsInGalleryAfter = await productListPage.getAllProduct();
+    const allProductsInGalleryAfter = await productListPage.getAllProducts();
     expect(allProductsInGalleryBefore.length).toBeLessThanOrEqual(allProductsInGalleryAfter.length);
   });
 });
