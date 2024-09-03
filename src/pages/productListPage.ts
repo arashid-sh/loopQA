@@ -86,8 +86,7 @@ export class ProductListPage {
   /**
    * Function gets all the product cards from the gallery
    */
-  async getAllProduct(): Promise<Locator[]> {
-    //await this.page.waitForTimeout(5000);
+  async getAllProducts(): Promise<Locator[]> {
     return await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').all();
   }
 

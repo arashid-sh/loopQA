@@ -18,7 +18,7 @@ on:
         description: 'Optional tags to filter Playwright tests.'
         required: false
       branch:
-        description: 'Optional paramater. This is the branch name that will be sent by the triggering branch.'
+        description: 'Optional parameter. This is the branch name that will be sent by the triggering branch.'
         required: false
       repo:
         description: 'Optional parameter. This will be the name of the repo.'

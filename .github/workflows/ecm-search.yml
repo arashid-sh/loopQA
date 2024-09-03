@@ -1,0 +1,30 @@
+name: ECMSearch Playwright Tests
+
+on:
+  schedule:
+    - cron: '0 * * * *' # This will run the pipeline every hour
+
+jobs:
+  ecmsearch-test:
+    name: 'Running ECMSearch tests'
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run ECMSearch Playwright tests
+        run: |
+          TEST_ENV=womenshealthqa npx playwright test -g 'ECMSearch'
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ecmsearch-playwright-report
+          path: playwright-report/
+          retention-days: 30

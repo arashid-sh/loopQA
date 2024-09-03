@@ -78,4 +78,12 @@ export class NavBar {
       throw error;
     }
   }
+
+  /**
+   * Function returns locators for all the category links in the nav bar e.g Fitenss, Beauty, Style, etc
+   * @returns array of locators
+   */
+  async getAllNavBarCategoryLinks(): Promise<Locator[]> {
+    return await this.page.getByTestId('fs-navbar-links-list-item').all();
+  }
 }
