@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { extractNumberFromLocatorTextContent } from '../helpers/helpers';
 
 config();
-test.describe('orders', { tag: '@faststore' }, () => {
+test.describe('Cart', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 300000 });
   test('validate message when cart is empty', async ({ page, navBar, productListPage, productDetailsPage, cart }) => {
     await page.goto('/');

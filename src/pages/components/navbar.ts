@@ -35,21 +35,12 @@ export class NavBar {
       await this.mobileSearchButton.click();
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
-      try {
-        await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
-      } catch (error) {
-        console.error('Timeout waiting for ClientManyProductsQuery response:', error);
-        throw error;
-      }
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor();
     } else {
       await this.searchInputField.fill(productName, { timeout: 120000 });
       await this.searchButton.click();
-      try {
-        await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
-      } catch (error) {
-        console.error('Timeout waiting for ClientManyProductsQuery response:', error);
-        throw error;
-      }
+      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor();
     }
   }
 

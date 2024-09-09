@@ -50,6 +50,9 @@ jobs:
           else
             TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test
           fi
+      - name: Run loyalty service tests
+        run: |
+          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService'
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         if: always()

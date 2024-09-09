@@ -10,6 +10,10 @@ export class ProductDetailsPage {
   readonly imageGallery: Locator;
   readonly increaseQuantityButton: Locator;
   readonly decreaseQuantityButton: Locator;
+  readonly linkYourAccount: Locator;
+  readonly loyaltyEmailField: Locator;
+  readonly loyaltyContinueButton: Locator;
+  readonly loyaltyVerificationCodeField: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,6 +22,10 @@ export class ProductDetailsPage {
     this.imageGallery = this.page.locator('[data-testid="fs-image-gallery-selector"] button img');
     this.increaseQuantityButton = this.page.getByTestId('fs-quantity-selector-right-button');
     this.decreaseQuantityButton = this.page.getByTestId('fs-quantity-selector-left-button');
+    this.linkYourAccount = this.page.getByRole('button', { name: 'Link your account!' });
+    this.loyaltyEmailField = this.page.locator('#fs-loyalty-program-email-input');
+    this.loyaltyContinueButton = this.page.locator('button[data-fs-loyalty-program-validation-button="true"]');
+    this.loyaltyVerificationCodeField = this.page.getByPlaceholder('Enter Digit Numbers');
   }
 
   /**

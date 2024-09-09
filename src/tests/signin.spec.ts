@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('sign in', { tag: '@faststore' }, () => {
+test.describe('Sign in', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 300000 });
   test.beforeEach(async ({ page, navBar }, testInfo) => {
     // Changing time out for these tests as they run longer on safari webkit on CI.
