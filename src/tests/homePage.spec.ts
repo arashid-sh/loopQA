@@ -2,7 +2,7 @@ import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
 
 config();
-test.describe('home page', { tag: '@faststore' }, () => {
+test.describe('Home page', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 300000 });
   test.beforeEach(async ({ page }) => {
     await page.goto('/');

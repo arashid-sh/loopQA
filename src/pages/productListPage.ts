@@ -5,12 +5,14 @@ export class ProductListPage {
   readonly mobileFilterButton: Locator;
   readonly loadMoreProductsButton: Locator;
   readonly imageGallery: Locator;
+  readonly firstProductInPlp: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.mobileFilterButton = this.page.getByTestId('open-filter-button');
     this.loadMoreProductsButton = this.page.getByTestId('show-more');
     this.imageGallery = this.page.locator('[data-testid="fs-image-gallery-selector"] button img');
+    this.firstProductInPlp = this.page.getByTestId('fs-product-card-content').first();
   }
 
   /**

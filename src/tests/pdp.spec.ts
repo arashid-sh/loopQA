@@ -4,7 +4,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('product display page', { tag: '@faststore' }, () => {
+test.describe('Product details page', { tag: '@faststore' }, () => {
   //https://playwright.dev/docs/api/class-test#test-set-timeout
   test.describe.configure({ timeout: 120000 });
 

@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('search', { tag: '@faststore' }, () => {
+test.describe('Search', { tag: '@faststore' }, () => {
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";

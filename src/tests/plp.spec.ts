@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-test.describe('plp', { tag: '@faststore' }, () => {
+test.describe('Product List Page', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 120000 });
 
   test.beforeEach(async ({ page, navBar }) => {
