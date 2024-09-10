@@ -43,16 +43,17 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Run loyalty service tests
+        run: |
+          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService'
       - name: Run Playwright tests
         run: |
           if [ -n "${{ github.event.inputs.tags }}" ]; then
             TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test -g '${{ github.event.inputs.tags }}'
           else
-            TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test
+            TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test -g '@faststore'
           fi
-      - name: Run loyalty service tests
-        run: |
-          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService'
+
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         if: always()
