@@ -6,6 +6,8 @@ import { NavBar } from '../pages/components/navbar';
 import { ProductListPage } from '../pages/productListPage';
 import { ProductDetailsPage } from '../pages/productDetailsPage';
 import { Cart } from '../pages/components/cart';
+import EmailIntegrationService from '../services/emailIntegrationService';
+import { LoyaltyService } from '../services/loyaltyService';
 
 type MyFixtures = {
   navBar: NavBar;
@@ -15,6 +17,8 @@ type MyFixtures = {
   creditCards: CreditCards;
   productListPage: ProductListPage;
   productDetailsPage: ProductDetailsPage;
+  emailIntegrationService: EmailIntegrationService;
+  loyaltyService: LoyaltyService;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -44,6 +48,16 @@ export const test = base.extend<MyFixtures>({
 
   cart: async ({ page }, use) => {
     await use(new Cart(page));
+  },
+
+  emailIntegrationService: async ({}, use) => {
+    await use(new EmailIntegrationService());
+  },
+
+  loyaltyService: async ({}, use) => {
+    const loyaltyService = new LoyaltyService();
+    await loyaltyService.init();
+    await use(loyaltyService);
   },
 });
 

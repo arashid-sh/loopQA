@@ -36,11 +36,12 @@ export class NavBar {
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
       await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
-      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor();
+      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor({ timeout: 10000 });
     } else {
-      await this.searchInputField.fill(productName, { timeout: 120000 });
+      await this.searchInputField.pressSequentially(productName, { timeout: 120000 });
       await this.searchButton.click();
-      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor();
+      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor({ timeout: 10000 });
     }
   }
 

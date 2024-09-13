@@ -41,6 +41,9 @@ export default defineConfig({
     actionTimeout: 30000,
     headless: true,
     baseURL: setEnvironment(),
+    launchOptions: {
+      slowMo: 1_000,
+    },
   },
 
   /* Configure projects for major browsers */
