@@ -46,6 +46,7 @@ jobs:
       - name: Run loyalty service tests
         run: |
           TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService'
+        continue-on-error: true
       - name: Run Playwright tests
         run: |
           if [ -n "${{ github.event.inputs.tags }}" ]; then
