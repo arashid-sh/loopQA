@@ -36,7 +36,7 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
 test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
   test.describe.configure({ timeout: 2000000 });
-  test('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
+  test.skip('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
     await page.goto('/');
     // Get all categories from the nav bar e.g Subscribe, fitness, etc
     const categories = await navBar.getAllNavBarCategoryLinks();

@@ -26,7 +26,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   test('ecmp-2956 verify image gallery interaction changes images', async ({ page, navBar, productListPage, productDetailsPage }) => {
     const productName = 'Treadmill';
     await navBar.searchForProduct(productName);
-    await productListPage.selectFirstProductFromList();
+    await productListPage.selectProductFromList(0);
     // Check if the image gallery exists on the product
     if (await page.getByTestId('fs-image-gallery-selector').isVisible()) {
       // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
@@ -39,7 +39,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ navBar, productListPage, productDetailsPage }) => {
     const productName = 'Treadmill';
     await navBar.searchForProduct(productName);
-    await productListPage.selectFirstProductFromList();
+    await productListPage.selectProductFromList(0);
     await productDetailsPage.increaseQuantityButton.click();
     await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '2');
     await productDetailsPage.decreaseQuantityButton.click();
@@ -61,7 +61,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     // Add number of items to cart
     await productDetailsPage.addQuantityToCart(selectedQuantity);
     // Assert product is in the mini cart.
-    await expect(page.getByTestId('fs-cart-sidebar').getByText(productName)).toBeVisible();
+    await expect(page.getByTestId('fs-cart-sidebar')).toContainText(productName);
     // Assert quantity of product in mini cart
     await expect(page.getByTestId('minicart-order-summary-subtotal-label')).toContainText(selectedQuantity);
     // Get total price of the item in the cart. This could be different depending on the quantity added.

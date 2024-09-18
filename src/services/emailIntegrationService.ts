@@ -1,6 +1,7 @@
 import MailosaurClient from 'mailosaur';
 
 import { EmailMessage } from '../types/emailMessage';
+import { MessageListResult } from 'mailosaur/lib/models';
 
 export default class EmailIntegrationService {
   private readonly apiKey = process.env.MAILOSAUR_API_KEY || '';
@@ -46,5 +47,36 @@ export default class EmailIntegrationService {
    */
   async deleteMessage(id: string): Promise<void> {
     await this.mailosaur.messages.del(id);
+  }
+
+  /** This function deletes [all] the messages in the server. */
+  async deleteAllMessages(): Promise<void> {
+    await this.mailosaur.messages.deleteAll(this.serverID);
+  }
+
+  /** This function returns an [object] containing all messages sent to a specific email address
+   * @param emailAddress the email address that you want to retrieve the messages for.
+   */
+  async getAllMessagesFor(emailAddress: string): Promise<MessageListResult> {
+    return await this.mailosaur.messages.search(this.serverID, { sentTo: emailAddress });
+  }
+
+  /**
+   * This functions takes an object of messages and looks for the subject that contains the text "Your verification code".
+   * It then extracts the verfication code from the string and returns it.
+   * @param allMessages An object that contains a list of email messages.
+   */
+  async getVerificationCodeFromListOfMessages(allMessages: MessageListResult): Promise<string | null> {
+    const messageSubject = allMessages.items?.find((item) => item.subject?.includes('Your verification code'));
+
+    // if subject was found containing the text "Your verification code"
+    if (messageSubject) {
+      const splitSubject = messageSubject.subject?.split(' ');
+      const verificationCode = splitSubject!.pop() ?? '';
+      return verificationCode;
+    } else {
+      console.error('Verification was not found with in: ', allMessages);
+      return null;
+    }
   }
 }
