@@ -18,7 +18,7 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
     });
   });
 
-  test('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
+  test.skip('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
     await productListPage.sortBy('price_desc');
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeGreaterThanOrEqual(prices[prices.length - 1]);

@@ -5,14 +5,12 @@ export class ProductListPage {
   readonly mobileFilterButton: Locator;
   readonly loadMoreProductsButton: Locator;
   readonly imageGallery: Locator;
-  readonly firstProductInPlp: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.mobileFilterButton = this.page.getByTestId('open-filter-button');
     this.loadMoreProductsButton = this.page.getByTestId('show-more');
     this.imageGallery = this.page.locator('[data-testid="fs-image-gallery-selector"] button img');
-    this.firstProductInPlp = this.page.getByTestId('fs-product-card-content').first();
   }
 
   /**
@@ -26,10 +24,13 @@ export class ProductListPage {
   }
 
   /**
-   * Function selects the first item being displayed on the PLP page.
+   * Function selects the nth item from the PLP page.
+   * @param index the nth index number of the product you want to click on. This is 0 based. First product will be 0, second 1, etc.
+   *
+   * @example await productListPage.selectProductFromList(0)
    */
-  async selectFirstProductFromList(): Promise<void> {
-    await this.page.getByTestId('fs-product-card').first().click();
+  async selectProductFromList(index: number): Promise<void> {
+    await this.page.getByTestId('fs-product-card').nth(index).click();
     try {
       await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
     } catch (error) {

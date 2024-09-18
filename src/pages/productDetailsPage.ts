@@ -14,6 +14,7 @@ export class ProductDetailsPage {
   readonly loyaltyEmailField: Locator;
   readonly loyaltyContinueButton: Locator;
   readonly loyaltyVerificationCodeField: Locator;
+  readonly unlinkAccountLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,6 +27,7 @@ export class ProductDetailsPage {
     this.loyaltyEmailField = this.page.locator('#fs-loyalty-program-email-input');
     this.loyaltyContinueButton = this.page.locator('button[data-fs-loyalty-program-validation-button="true"]');
     this.loyaltyVerificationCodeField = this.page.getByPlaceholder('Enter Digit Numbers');
+    this.unlinkAccountLink = this.page.getByRole('button', { name: 'Unlink your sephora account.' });
   }
 
   /**
