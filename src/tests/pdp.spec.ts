@@ -26,7 +26,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   test('ecmp-2956 verify image gallery interaction changes images', async ({ page, navBar, productListPage, productDetailsPage }) => {
     const productName = 'Treadmill';
     await navBar.searchForProduct(productName);
-    await productListPage.selectProductFromList(0);
+    await productListPage.selectProduct(productName);
     // Check if the image gallery exists on the product
     if (await page.getByTestId('fs-image-gallery-selector').isVisible()) {
       // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
@@ -39,7 +39,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ navBar, productListPage, productDetailsPage }) => {
     const productName = 'Treadmill';
     await navBar.searchForProduct(productName);
-    await productListPage.selectProductFromList(0);
+    await productListPage.selectProduct(productName);
     await productDetailsPage.increaseQuantityButton.click();
     await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '2');
     await productDetailsPage.decreaseQuantityButton.click();
