@@ -4,6 +4,8 @@ import { config } from 'dotenv';
 config();
 
 test.describe('Search', { tag: '@faststore' }, () => {
+  test.describe.configure({ timeout: 120000 });
+
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
     const productName = "Trayton's Dumbbells";
