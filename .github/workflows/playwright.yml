@@ -69,7 +69,7 @@ jobs:
           status: ${{job.status}}
           notify_when: 'failure'
           notification_title: '{workflow} has {status_message}'
-          message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
-          footer: 'You can download the job artifacts at: ${{ steps.artifact-upload-step.outputs.artifact-id }}'
+          message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}|actions> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
+          footer: 'You can download the job artifacts at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
