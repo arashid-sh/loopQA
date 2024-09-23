@@ -56,6 +56,7 @@ jobs:
           fi
       - name: Uploading artifacts
         uses: actions/upload-artifact@v4
+        id: artifact-upload-step
         if: always()
         with:
           name: playwright-report
@@ -68,7 +69,7 @@ jobs:
           status: ${{job.status}}
           notify_when: 'failure'
           notification_title: '{workflow} has {status_message}'
-          message_format: '${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} has failed. PR Author ${{github.event.inputs.pr_author}}'
-          footer: 'Linked to Repo <{repo_url}|{repo}>'
+          message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
+          footer: 'You can download the job artifacts at: ${{ steps.artifact-upload-step.outputs.artifact-id }}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
