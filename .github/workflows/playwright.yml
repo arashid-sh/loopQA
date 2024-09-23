@@ -54,11 +54,21 @@ jobs:
           else
             TEST_ENV=${{ github.event.inputs.environment || 'womenshealthqa' }} npx playwright test -g '@faststore'
           fi
-
-      - name: upload artifacts
+      - name: Uploading artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: Notify Slack Action
+        uses: ravsamhq/notify-slack-action@2.3.0
+        if: always()
+        with:
+          status: ${{job.status}}
+          notify_when: 'failure'
+          notification_title: '{workflow} has {status_message}'
+          message_format: '${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} has failed. PR Author ${{github.event.inputs.pr_author}}'
+          footer: 'Linked to Repo <{repo_url}|{repo}>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
