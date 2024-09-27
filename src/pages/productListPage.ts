@@ -29,14 +29,8 @@ export class ProductListPage {
    *
    * @example await productListPage.selectProductFromList(0)
    */
-  async selectProductFromList(index: number): Promise<void> {
+  async selectNthProductFromList(index: number): Promise<void> {
     await this.page.getByTestId('fs-product-card').nth(index).click();
-    try {
-      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
-    } catch (error) {
-      console.error('Timeout waiting for ClientManyProductsQuery response:', error);
-      throw error;
-    }
   }
 
   // /**

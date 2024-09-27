@@ -8,8 +8,8 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
 
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
-    const productName = "Trayton's Dumbbells";
-    await navBar.searchForProduct(productName);
+    const product = 'sephora';
+    await navBar.searchForProduct(product);
   });
 
   [{ component: 'desktop-fs-filter-container' }, { component: 'search-sort' }].forEach(({ component }) => {
@@ -63,10 +63,17 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
 
   test('eCMP-2130 validate PDP page for an item', async ({ page, productListPage }) => {
     // Get the name of the first product on the product list page
-    const product = (await page.locator('[data-testid="fs-product-card-content"] a span').first().innerText()).trim();
-    await productListPage.selectProduct(product);
+    const productName = (await page.locator('[data-testid="fs-product-card-content"] a span').first().innerText()).trim();
+    await productListPage.selectProduct(productName);
     // Validate that the PDP page is for the correct product
-    expect(product).toMatch((await page.getByRole('heading', { name: `${product}` }).innerText()).trim());
+    expect(productName).toMatch(
+      (
+        await page
+          .getByRole('heading', { name: `${productName}` })
+          .first()
+          .innerText()
+      ).trim(),
+    );
   });
 });
 
