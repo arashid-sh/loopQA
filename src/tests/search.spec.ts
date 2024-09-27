@@ -8,8 +8,9 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
   test.beforeEach(async ({ page, navBar }) => {
     await page.goto('/');
-    const productName = "Trayton's Dumbbells";
-    await navBar.searchForProduct(productName);
+    const product = 'sephora';
+    await navBar.searchForProduct(product);
+
     // wait for products to load on the product list page
     await navBar.searchInputField.focus();
     await navBar.searchInputField.click();
