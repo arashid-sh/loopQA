@@ -5,14 +5,18 @@ config();
 
 const successfulLinkMessage =
   'Thank you for being a Beauty Insider! Your account is linked to Sephora. You will earn Beauty Insider points for any Sephora products you purchase today.';
-test.describe.skip('Loyalty Service', { tag: '@loyaltyService' }, () => {
+test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
   test.describe.configure({ timeout: 600000, mode: 'serial' });
 
   test.beforeEach(async ({ page, navBar, productListPage }) => {
-    await page.goto('/');
-    const productName = 'sephora';
+    await page.goto('https://qa.harpersbazaar.ecmapps.com/');
+    const productName = process.env.PRODUCT ?? 'undefined';
     await navBar.searchForProduct(productName);
-    await productListPage.selectProductFromList(0);
+    await productListPage.selectNthProductFromList(0);
+  });
+
+  test.afterEach(async ({ emailIntegrationService }) => {
+    await emailIntegrationService.deleteAllMessages();
   });
 
   test('verify random OTP code displays an error message ECMP-4252', async ({ page, productDetailsPage }) => {
@@ -57,7 +61,7 @@ test.describe.skip('Loyalty Service', { tag: '@loyaltyService' }, () => {
 
     await test.step('go to another product and verify account is still linked', async () => {
       await page.goBack();
-      await productListPage.selectProductFromList(1);
+      await productListPage.selectNthProductFromList(1);
       await expect.soft(page.getByText(successfulLinkMessage)).toBeVisible();
     });
 

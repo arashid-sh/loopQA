@@ -10,7 +10,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
 
   test.beforeEach(async ({ page, navBar, productListPage }) => {
     await page.goto('/');
-    const product = 'sephora';
+    const product = process.env.PRODUCT ? process.env.PRODUCT : 'sephora';
     await navBar.searchForProduct(product);
     await productListPage.selectNthProductFromList(1);
   });
@@ -44,7 +44,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   });
 
   test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing', async ({ page, productDetailsPage }) => {
-    const selectedQuantity = '3';
+    const selectedQuantity = '1';
     // Get product name
     const productName = await productDetailsPage.productNameLocator.textContent();
     // Get product price
@@ -61,3 +61,17 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     expect(productPrice * Number(selectedQuantity)).toStrictEqual(totalPriceInCart);
   });
 });
+
+test(
+  'add to cart button should not show a loading state when user is logged in (Regression bug)',
+  { tag: '@faststore' },
+  async ({ page, navBar, signInPage, productListPage }) => {
+    await page.goto('/');
+    await navBar.clickSignInButton();
+    await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);
+    const product = process.env.PRODUCT ?? 'sephora';
+    await navBar.searchForProduct(product);
+    await productListPage.selectNthProductFromList(1);
+    await expect(page.locator('p[data-fs-button-loading-label="true"]')).toHaveCount(0);
+  },
+);
