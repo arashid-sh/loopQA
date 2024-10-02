@@ -47,16 +47,28 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     const selectedQuantity = '1';
     // Get product name
     const productName = await productDetailsPage.productNameLocator.textContent();
-    // Get product price
-    const productPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
+
+    // Get product price. Logic checks if product is on sale and passes the correct locator to extract the price from.
+    let productPrice: number;
+    if (await page.getByTestId('product-card-spot-price').isVisible()) {
+      productPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-spot-price'));
+    } else productPrice = await extractPriceAsInteger(page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
+
     // Add number of items to cart
     await productDetailsPage.addQuantityToCart(selectedQuantity);
+
     // Assert product is in the mini cart.
     await expect(page.getByTestId('fs-cart-sidebar')).toContainText(productName!);
+
     // Assert quantity of product in mini cart
     await expect(page.getByTestId('minicart-order-summary-subtotal-label')).toContainText(selectedQuantity);
+
     // Get total price of the item in the cart. This could be different depending on the quantity added.
-    const totalPriceInCart = await extractPriceAsInteger(page.getByTestId('minicart-order-summary-subtotal-value'));
+    let totalPriceInCart: number;
+    if (await page.getByTestId('minicart-order-summary-total-value').isVisible()) {
+      totalPriceInCart = await extractPriceAsInteger(page.getByTestId('minicart-order-summary-total-value'));
+    } else totalPriceInCart = await extractPriceAsInteger(page.getByTestId('minicart-order-summary-subtotal-value'));
+
     // Verify total price in mini cart is correct.
     expect(productPrice * Number(selectedQuantity)).toStrictEqual(totalPriceInCart);
   });
