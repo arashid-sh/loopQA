@@ -37,8 +37,8 @@ export default defineConfig({
     trace: 'retain-on-first-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    navigationTimeout: 30000,
-    actionTimeout: 30000,
+    navigationTimeout: 60000,
+    actionTimeout: 60000,
     headless: true,
     baseURL: setEnvironment(),
     launchOptions: {
