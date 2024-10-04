@@ -14,12 +14,13 @@ test.describe('E2E flow', () => {
     creditCards,
   }) => {
     await page.goto('/');
-    const productName = "Trayton's Dumbbells";
-    await navBar.searchForProduct(productName);
-    await productListPage.selectProduct(productName);
-    await productDetailsPage.addQuantityToCart('3');
+    const product = process.env.PRODUCT ? process.env.PRODUCT : 'sephora';
+    await navBar.searchForProduct(product);
+    await productListPage.selectNthProductFromList(1);
+    await productDetailsPage.addQuantityToCart('1');
     // soft assertion to check that the right number of items appear in the mini cart
-    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
+    expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('1');
+    await page.waitForTimeout(1000);
     await test.step('enter contact info in fast checkout', async () => {
       await cart.proceedToCheckout();
       await cart.addContactInfo();
@@ -50,9 +51,9 @@ test.describe('E2E flow', () => {
     await page.goto('/');
     await navBar.clickSignInButton();
     await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);
-    const productName = 'Ziva Studio Tribell Dumbbells';
-    await navBar.searchForProduct(productName);
-    await productListPage.selectProduct(productName);
+    const product = process.env.PRODUCT ? process.env.PRODUCT : 'sephora';
+    await navBar.searchForProduct(product);
+    await productListPage.selectNthProductFromList(1);
     await productDetailsPage.addQuantityToCart('1');
     expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('1');
     await cart.proceedToCheckout();
