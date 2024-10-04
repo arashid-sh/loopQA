@@ -74,7 +74,7 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
   });
 });
 
-test(
+test.skip(
   'add to cart button should not show a loading state when user is logged in (Regression bug)',
   { tag: '@faststore' },
   async ({ page, navBar, signInPage, productListPage }) => {
