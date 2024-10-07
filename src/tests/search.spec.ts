@@ -39,7 +39,7 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
 test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
   test.describe.configure({ timeout: 2000000 });
-  test.skip('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
+  test('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
     await page.goto('/');
     // Get all categories from the nav bar e.g Subscribe, fitness, etc
     const categories = await navBar.getAllNavBarCategoryLinks();
@@ -48,7 +48,7 @@ test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
     for await (const category of categories) {
       await category.click();
       // wait for the page to load
-      await page.waitForTimeout(15000);
+      await page.waitForTimeout(5000);
       // This will check if the product list page exits on the page. Some categories like Subscribe and Featured Brands don't have PLP pages.
       const ele = page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first();
       if (await ele.isVisible({ timeout: 20000 })) {

@@ -3,6 +3,7 @@ export const environments = {
   menshealthqa: 'https://qa.menshealth.ecmapps.com/',
   cosmopolitanqa: 'https://qa.cosmopolitan.ecmapps.com/',
   harpersbazaarqa: 'https://qa.harpersbazaar.ecmapps.com/',
+  harpersbazaarprod: 'https://shop.harpersbazaar.com/',
 };
 
 /**

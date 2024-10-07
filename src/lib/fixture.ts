@@ -8,17 +8,19 @@ import { ProductDetailsPage } from '../pages/productDetailsPage';
 import { Cart } from '../pages/components/cart';
 import EmailIntegrationService from '../services/emailIntegrationService';
 import { LoyaltyService } from '../services/loyaltyService';
+import { MiniCart } from '../pages/components/minicart';
 
 type MyFixtures = {
-  navBar: NavBar;
   cart: Cart;
-  homePage: HomePage;
-  signInPage: SignInPage;
   creditCards: CreditCards;
-  productListPage: ProductListPage;
-  productDetailsPage: ProductDetailsPage;
   emailIntegrationService: EmailIntegrationService;
+  homePage: HomePage;
   loyaltyService: LoyaltyService;
+  miniCart: MiniCart;
+  navBar: NavBar;
+  productDetailsPage: ProductDetailsPage;
+  productListPage: ProductListPage;
+  signInPage: SignInPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -48,6 +50,10 @@ export const test = base.extend<MyFixtures>({
 
   cart: async ({ page }, use) => {
     await use(new Cart(page));
+  },
+
+  miniCart: async ({ page }, use) => {
+    await use(new MiniCart(page));
   },
 
   emailIntegrationService: async ({}, use) => {
