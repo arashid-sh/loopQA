@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { extractPriceAsInteger } from '../helpers/helpers';
 
 export class ProductDetailsPage {
   readonly page: Page;
@@ -29,7 +30,7 @@ export class ProductDetailsPage {
     this.loyaltyContinueButton = this.page.locator('button[data-fs-loyalty-program-validation-button="true"]');
     this.loyaltyVerificationCodeField = this.page.getByPlaceholder('Enter Digit Numbers');
     this.unlinkAccountLink = this.page.getByRole('button', { name: 'Unlink your sephora account.' });
-    this.productNameLocator = this.page.locator('h1[data-fs-product-name="true"]');
+    this.productNameLocator = this.page.getByTestId('fs-product-title-header').locator('h1');
   }
 
   /**
@@ -61,5 +62,18 @@ export class ProductDetailsPage {
   async clickImageFromImageGallery(image: number): Promise<string | null> {
     await this.imageGallery.nth(image).click();
     return await this.imageGallery.nth(image).getAttribute('alt');
+  }
+
+  /**
+   * Function returns the price of the product from the PDP page. If a product is on sale, the sale price will be returned.
+   * @returns the price of the product
+   *
+   * @example let productPrice = await productDetailsPage.getProductPrice();
+   */
+
+  async getProductPrice(): Promise<number> {
+    if (await this.page.getByTestId('product-card-spot-price').isVisible()) {
+      return await extractPriceAsInteger(this.page.getByTestId('fs-product-details-prices').getByTestId('product-card-spot-price'));
+    } else return await extractPriceAsInteger(this.page.getByTestId('fs-product-details-prices').getByTestId('product-card-selling-price'));
   }
 }

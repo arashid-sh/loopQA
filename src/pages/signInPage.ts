@@ -35,5 +35,7 @@ export class SignInPage {
     await this.emailInputField.fill(email);
     await this.passwordInputField.fill(password);
     await this.signInButton.click();
+    // Wait for the 'Sign In' icon to change to 'My Account'
+    await this.page.locator('span', { hasText: 'My Account' }).waitFor();
   }
 }
