@@ -13,6 +13,8 @@ config();
       if (loggedIn) {
         await navBar.clickSignInButton();
         await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);
+        // Wait for the 'Sign In' icon to change to 'My Account'
+        await page.locator('span', { hasText: 'My Account' }).waitFor();
       }
 
       await navBar.searchForProduct(product);
