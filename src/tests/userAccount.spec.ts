@@ -46,7 +46,7 @@ test.describe('User Account', { tag: '@faststore' }, () => {
     await accountPage.deleteAddressButton.click();
   });
 
-  test('validate user can edit addresses', async ({ page, accountPage, userAddress }) => {
+  test('validate user can edit addresses', async ({ page, accountPage }) => {
     const addressLine1 = '1234 test street';
     const randomAptNumber = Math.floor(Math.random() * 900) + 100; // Generates a random number between 100 and 999
     const addressWithApt = `${addressLine1} #${randomAptNumber}`;
