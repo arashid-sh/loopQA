@@ -13,25 +13,29 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
   });
 
   [{ component: 'desktop-fs-filter-container' }, { component: 'search-sort' }].forEach(({ component }) => {
-    test(`validate ${component} component exists`, async ({ page }) => {
+    test(`validate ${component} component exists`, async ({ browserName, page }) => {
+      test.slow(browserName === 'webkit', 'This feature is slow in Safari');
       await expect(page.getByTestId(component).first()).toBeVisible();
     });
   });
 
-  test.skip('eCMP-2123 validate sort by price, descending', async ({ productListPage }) => {
+  test.skip('eCMP-2123 validate sort by price, descending', async ({ browserName, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('price_desc');
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeGreaterThanOrEqual(prices[prices.length - 1]);
   });
 
-  test('eCMP-2124 validate sort by price, ascending', async ({ productListPage }) => {
+  test('eCMP-2124 validate sort by price, ascending', async ({ browserName, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('price_asc');
     const prices = await productListPage.getAllProductPrices();
     expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   // This filter is not showing up in the PLP page as of 08/27/24
-  test.skip('eCMP-2125 validate sort by name, A-Z', async ({ productListPage }) => {
+  test.skip('eCMP-2125 validate sort by name, A-Z', async ({ browserName, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('name_asc');
     const allProductNames = await productListPage.getAllProductNames();
     if (allProductNames.length > 1) {
@@ -40,7 +44,8 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
   });
 
   // This filter is not showing up in the PLP page as of 08/27 / 24;
-  test.skip('eCMP-2126 validate sort by name, Z-A', async ({ productListPage }) => {
+  test.skip('eCMP-2126 validate sort by name, Z-A', async ({ browserName, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('name_desc');
     const allProductNames = await productListPage.getAllProductNames();
     if (allProductNames.length > 1) {
@@ -49,7 +54,8 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
   });
 
   // This filter is not showing up in the PLP page as of 08/27/24
-  test.skip('eCMP-2127 validate sort by discount', async ({ page, productListPage }) => {
+  test.skip('eCMP-2127 validate sort by discount', async ({ browserName, page, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('discount_desc');
 
     // Check if discount is available
@@ -61,7 +67,8 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
     }
   });
 
-  test('eCMP-2130 validate PDP page for an item', async ({ page, productListPage }) => {
+  test('eCMP-2130 validate PDP page for an item', async ({ browserName, page, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     // Get the name of the first product on the product list page
     const productName = (await page.locator('[data-testid="fs-product-card-content"] a span').first().innerText()).trim();
     await productListPage.selectProduct(productName);
@@ -79,8 +86,9 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
 
 test.describe.fixme('pagination', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 120000 });
-  test('eCMP-2129 validate Load More Products button loads more products', async ({ page, navBar, productListPage }) => {
+  test('eCMP-2129 validate Load More Products button loads more products', async ({ browserName, page, navBar, productListPage }) => {
     await page.goto('/');
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await navBar.clickLink('Fitness & Nutrition');
     const allProductsInGalleryBefore = await productListPage.getAllProducts();
     await productListPage.loadMoreProductsButton.click();

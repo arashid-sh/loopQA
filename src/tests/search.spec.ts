@@ -16,21 +16,25 @@ test.describe('Search', { tag: '@faststore' }, () => {
     await navBar.searchInputField.click();
   });
 
-  test('verify search history displays in the search bar', async ({ page }) => {
+  test('verify search history displays in the search bar', async ({ browserName, page }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await expect(page.getByTestId('fs-search-history')).toBeVisible();
   });
 
-  test('verify user can clear search history', async ({ page, navBar }) => {
+  test('verify user can clear search history', async ({ browserName, page, navBar }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await navBar.searchClearHistoryButton.click();
     await expect(page.getByTestId('fs-search-history')).toBeHidden();
   });
 
-  test('verify search auto complete suggestions', async ({ page, navBar }) => {
+  test('verify search auto complete suggestions', async ({ browserName, page, navBar }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await navBar.searchInputField.fill('t');
     await expect(page.getByTestId('fs-search-auto-complete')).toBeVisible();
   });
 
-  test('verify searching for a keyword that returns no results', async ({ page, navBar }) => {
+  test('verify searching for a keyword that returns no results', async ({ browserName, page, navBar }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await navBar.searchInputField.fill('random&*43', { timeout: 120000 });
     await navBar.searchButton.click();
     await expect(page.getByTestId('fs-empty-state')).toBeVisible();
@@ -39,7 +43,8 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
 test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
   test.describe.configure({ timeout: 2000000 });
-  test('OOS products should not be shown on the PLP page', async ({ page, navBar, productListPage }) => {
+  test('OOS products should not be shown on the PLP page', async ({ browserName, page, navBar, productListPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await page.goto('/');
     // Get all categories from the nav bar e.g Subscribe, fitness, etc
     const categories = await navBar.getAllNavBarCategoryLinks();

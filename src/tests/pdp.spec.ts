@@ -15,7 +15,8 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     await productListPage.selectNthProductFromList(1);
   });
 
-  test.fixme('ecmp-2955 verify selecting different variant changes price', async ({ page, navBar, productListPage, productDetailsPage }) => {
+  test.fixme('ecmp-2955 verify selecting different variant changes price', async ({ browserName, page, navBar, productListPage, productDetailsPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     const productName = "Trayton's Dumbbells";
     await navBar.searchForProduct(productName);
     await productListPage.selectProduct(productName);
@@ -26,7 +27,8 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     expect(getCurrentItemPrice).not.toBe(getChangedItemPrice);
   });
 
-  test('ecmp-2956 verify image gallery interaction changes images', async ({ page, productDetailsPage }) => {
+  test('ecmp-2956 verify image gallery interaction changes images', async ({ browserName, page, productDetailsPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     // Check if the image gallery exists on the product
     if (await page.getByTestId('fs-image-gallery-selector').isVisible()) {
       // this step clicks on the nth image in the image gallery. The clickImageFromImageGallery(number) also returns the text from the 'alt' attribute of the element
@@ -36,14 +38,20 @@ test.describe('Product details page', { tag: '@faststore' }, () => {
     }
   });
 
-  test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ productDetailsPage }) => {
+  test('ecmp-2959 verify quantity adjustment icons updates the number accurately', async ({ browserName, productDetailsPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productDetailsPage.increaseQuantityButton.click();
     await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '2');
     await productDetailsPage.decreaseQuantityButton.click();
     await expect(productDetailsPage.quantityInputField).toHaveAttribute('value', '1');
   });
 
-  test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing', async ({ page, productDetailsPage }) => {
+  test('ecm-2964 verify add-to-card adds item to mini cart; verify product, variant, quantity and pricing', async ({
+    browserName,
+    page,
+    productDetailsPage,
+  }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     const selectedQuantity = '1';
     // Get product name
     const productName = await productDetailsPage.productNameLocator.textContent();
