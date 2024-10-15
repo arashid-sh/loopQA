@@ -22,11 +22,13 @@ config();
     });
 
     test(`ecmp-4812 add 2 different items to the cart and verify cart contents when user logged in = [${loggedIn}]`, async ({
+      browserName,
       miniCart,
       page,
       productDetailsPage,
       productListPage,
     }) => {
+      test.slow(browserName === 'webkit', 'This feature is slow in Safari');
       let firstProductPrice: number;
       let secondProductPrice: number;
       let firstProductName: string;
@@ -58,12 +60,14 @@ config();
     });
 
     test(`ecmp-4813 add item to the cart, remove it and add another item to cart when user logged in = [${loggedIn}]`, async ({
+      browserName,
       miniCart,
       navBar,
       page,
       productDetailsPage,
       productListPage,
     }) => {
+      test.slow(browserName === 'webkit', 'This feature is slow in Safari');
       let secondProductPrice: number;
       let firstProductName: string;
       let secondProductName: string;

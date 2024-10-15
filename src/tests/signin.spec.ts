@@ -12,14 +12,16 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     await navBar.clickSignInButton();
   });
 
-  test('validate user can login successfully', async ({ page, signInPage }) => {
+  test('validate user can login successfully', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);
       await expect(page).toHaveTitle(/.*FastStore.*/);
     }
   });
 
-  test('verify error message is shown when invalid password is used', async ({ page, signInPage }) => {
+  test('verify error message is shown when invalid password is used', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.loginUser(process.env.EMAIL!, 'test1234!0980');
       expect(await page.getByTestId('ErrorContainer').textContent()).toContain(
@@ -33,7 +35,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     { email: '2#$@#$2', error: 'Please enter a valid email address' },
   ];
   for (const data of config) {
-    test(`verify error message when ${data.email} email address is used`, async ({ page, signInPage }) => {
+    test(`verify error message when ${data.email} email address is used`, async ({ browserName, page, signInPage }) => {
+      test.slow(browserName === 'webkit', 'This feature is slow in Safari');
       if (await signInPage.passwordInputField.isVisible()) {
         await signInPage.emailInputField.fill(data.email);
         await signInPage.signInButton.click();
@@ -42,7 +45,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     });
   }
 
-  test('verify error message when empty password is used', async ({ page, signInPage }) => {
+  test('verify error message when empty password is used', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.emailInputField.fill(process.env.EMAIL!);
       await signInPage.emailInputField.fill('');
@@ -51,7 +55,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     }
   });
 
-  test('verify clicking "Forgot Password" link redirects the user to Forgot Password page', async ({ page, signInPage }) => {
+  test('verify clicking "Forgot Password" link redirects the user to Forgot Password page', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.emailInputField.fill(process.env.EMAIL!);
       await signInPage.forgotPasswordLink.click();
@@ -59,7 +64,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     }
   });
 
-  test('verify user can navigate back to login page from forgot password page', async ({ page, signInPage }) => {
+  test('verify user can navigate back to login page from forgot password page', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.emailInputField.fill(process.env.EMAIL!);
       await signInPage.forgotPasswordLink.click();
@@ -68,7 +74,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     }
   });
 
-  test('Verify correct message displays on entering the email address on Forgot Password page', async ({ page, signInPage }) => {
+  test('Verify correct message displays on entering the email address on Forgot Password page', async ({ browserName, page, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.forgotPasswordLink.click();
       await signInPage.emailInputField.fill(process.env.EMAIL!);
@@ -78,7 +85,8 @@ test.describe('Sign in', { tag: '@faststore' }, () => {
     }
   });
 
-  test('Verify user is taken back to Forgot Password page on clicking Try Again link', async ({ signInPage }) => {
+  test('Verify user is taken back to Forgot Password page on clicking Try Again link', async ({ browserName, signInPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     if (await signInPage.passwordInputField.isVisible()) {
       await signInPage.forgotPasswordLink.click();
       await signInPage.emailInputField.fill(process.env.EMAIL!);

@@ -6,6 +6,7 @@ config();
 test.describe('E2E flow', () => {
   test.describe.configure({ timeout: 300000 });
   test('validate a user can order a product when NOT logged in @MH @SMOKE', async ({
+    browserName,
     page,
     navBar,
     productListPage,
@@ -13,6 +14,7 @@ test.describe('E2E flow', () => {
     cart,
     creditCards,
   }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await page.goto('/');
     const product = process.env.PRODUCT ? process.env.PRODUCT : 'sephora';
     await navBar.searchForProduct(product);
@@ -40,6 +42,7 @@ test.describe('E2E flow', () => {
   });
 
   test('validate a user can order a product when logged in @MH @SMOKE', async ({
+    browserName,
     page,
     signInPage,
     navBar,
@@ -48,6 +51,7 @@ test.describe('E2E flow', () => {
     cart,
     creditCards,
   }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await page.goto('/');
     await navBar.clickSignInButton();
     await signInPage.loginUser(process.env.EMAIL!, process.env.PASSWORD!);
