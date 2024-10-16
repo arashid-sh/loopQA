@@ -60,14 +60,14 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      # - name: Notify Slack Action
-      #   uses: ravsamhq/notify-slack-action@v2
-      #   if: always()
-      #   with:
-      #     status: ${{job.status}}
-      #     notify_when: 'failure'
-      #     notification_title: '{workflow} have {status_message}'
-      #     message_format: '{emoji} *{workflow}* {status_message} in <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
-      #     footer: 'You can download the job artifact(s) at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
+      - name: Notify Slack Action
+        uses: ravsamhq/notify-slack-action@v2
+        if: always()
+        with:
+          status: ${{job.status}}
+          notify_when: 'failure'
+          notification_title: '{workflow} have {status_message}'
+          message_format: '{emoji} *{workflow}* {status_message} in <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
+          footer: 'You can download the job artifact(s) at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
