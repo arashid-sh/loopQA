@@ -21,6 +21,7 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
 
   test('verify random OTP code displays an error message ECMP-4252', async ({ browserName, page, productDetailsPage }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
+    await productDetailsPage.linkYourAccount.click();
     await productDetailsPage.loyaltyEmailField.fill('affan.rashid@hearst.com');
     await productDetailsPage.loyaltyContinueButton.click();
     await productDetailsPage.loyaltyVerificationCodeField.waitFor();
