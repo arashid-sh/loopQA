@@ -42,8 +42,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run loyalty service tests
+        # Loyalty service tests can't be run in parallel because there will be race conditions when the OTP email is sent out. Tests will retrieve the wrong OTP from mailosaur if run in prallel
         run: |
-          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService'
+          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService' --workers=1
         continue-on-error: true
       - name: Run Playwright tests
         run: |
