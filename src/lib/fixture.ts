@@ -9,8 +9,11 @@ import { Cart } from '../pages/components/cart';
 import EmailIntegrationService from '../services/emailIntegrationService';
 import { LoyaltyService } from '../services/loyaltyService';
 import { MiniCart } from '../pages/components/minicart';
+import { AccountPage } from '../pages/AccountPage';
+import { UserAddress } from '../datafactory/userAddress';
 
 type MyFixtures = {
+  accountPage: AccountPage;
   cart: Cart;
   creditCards: CreditCards;
   emailIntegrationService: EmailIntegrationService;
@@ -21,9 +24,14 @@ type MyFixtures = {
   productDetailsPage: ProductDetailsPage;
   productListPage: ProductListPage;
   signInPage: SignInPage;
+  userAddress: UserAddress;
 };
 
 export const test = base.extend<MyFixtures>({
+  accountPage: async ({ page }, use) => {
+    await use(new AccountPage(page));
+  },
+
   navBar: async ({ page }, use) => {
     await use(new NavBar(page));
   },
@@ -42,6 +50,10 @@ export const test = base.extend<MyFixtures>({
 
   creditCards: async ({}, use) => {
     await use(new CreditCards());
+  },
+
+  userAddress: async ({}, use) => {
+    await use(new UserAddress());
   },
 
   productDetailsPage: async ({ page }, use) => {

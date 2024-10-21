@@ -7,6 +7,7 @@ export class NavBar {
   readonly searchButton: Locator;
   readonly mobileSearchButton: Locator;
   readonly searchClearHistoryButton: Locator;
+  readonly myAccountButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class NavBar {
     this.searchButton = page.getByTestId('fs-search-button');
     this.mobileSearchButton = page.getByTestId('store-input-mobile-button');
     this.searchClearHistoryButton = page.getByText('HistoryClear History').getByTestId('fs-button');
+    this.myAccountButton = page.locator('span', { hasText: 'My Account' });
   }
 
   /**
