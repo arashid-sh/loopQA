@@ -5,7 +5,8 @@ import { extractNumberFromLocatorTextContent } from '../helpers/helpers';
 config();
 test.describe('Cart', { tag: '@faststore' }, () => {
   test.describe.configure({ timeout: 300000 });
-  test('validate message when cart is empty', async ({ page, navBar, productListPage, productDetailsPage, cart }) => {
+  test('validate message when cart is empty', async ({ browserName, page, navBar, productListPage, productDetailsPage, cart }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await page.goto('/');
     const product = 'sephora';
     await navBar.searchForProduct(product);

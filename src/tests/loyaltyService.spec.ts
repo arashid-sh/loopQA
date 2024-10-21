@@ -19,7 +19,8 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
     await emailIntegrationService.deleteAllMessages();
   });
 
-  test('verify random OTP code displays an error message ECMP-4252', async ({ page, productDetailsPage }) => {
+  test('verify random OTP code displays an error message ECMP-4252', async ({ browserName, page, productDetailsPage }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productDetailsPage.linkYourAccount.click();
     await productDetailsPage.loyaltyEmailField.fill('affan.rashid@hearst.com');
     await productDetailsPage.loyaltyContinueButton.click();
@@ -31,11 +32,13 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
   });
 
   test('verify that a user with sephora and hearst/vtex account, can link, loyalty_service cookie is created, and successfully unlink (via api) when logged out happy path ECMP-4245 ECMP-4247', async ({
+    browserName,
     page,
     productListPage,
     productDetailsPage,
     emailIntegrationService,
   }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     const emailAddress = '0apau@yyue1jau.mailosaur.net'; //This email has been registered with sephora staging
 
     await test.step('linking loyalty account', async () => {
@@ -80,11 +83,13 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
   });
 
   test('Verify that a user with sephora account and [no] hearst/vtex account can link ECMP-4243', async ({
+    browserName,
     page,
     productDetailsPage,
     emailIntegrationService,
     loyaltyService,
   }) => {
+    test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     const emailAddress = await emailIntegrationService.createNewEmailAddress();
     await test.step('registering a sephora user via /sephora/register api', async () => {
       await loyaltyService.registerSephoraAccount(emailAddress, '5', 'harpersbazaarqa');
