@@ -49,12 +49,20 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'chromium - womens health qa',
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
     },
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 } },
+      name: 'webkit - cosmo qa',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 }, baseURL: 'https://qa.cosmopolitan.ecmapps.com/' },
+    },
+    {
+      name: 'webkit - prevention qa',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 }, baseURL: 'https://qa.prevention.ecmapps.com/' },
+    },
+    {
+      name: 'webkit - harper bazaar qa',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 }, baseURL: 'https://qa.harpersbazaar.ecmapps.com/' },
     },
   ],
 });
