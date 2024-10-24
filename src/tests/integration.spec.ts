@@ -18,7 +18,7 @@ config();
       }
 
       await navBar.searchForProduct(product);
-      await productListPage.selectNthProductFromList(1);
+      await productListPage.selectNthProductFromList(3);
     });
 
     test(`ecmp-4812 add 2 different items to the cart and verify cart contents when user logged in = [${loggedIn}]`, async ({
@@ -89,7 +89,7 @@ config();
       });
 
       await navBar.searchForProduct(product);
-      await productListPage.selectNthProductFromList(5);
+      await productListPage.selectNthProductFromList(6);
 
       await test.step('get second products name and price', async () => {
         secondProductName = await productDetailsPage.productNameLocator.innerText();
