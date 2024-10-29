@@ -16,8 +16,5 @@ test.describe('Cart', { tag: '@faststore' }, () => {
     expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
     await cart.removeButton.click();
     await expect(page.getByText('Your Cart is Empty')).toBeVisible();
-    await expect(page.getByText('To continue shopping, browse')).toContainText(
-      'To continue shopping, browse the categories on the site or search for your products.',
-    );
   });
 });

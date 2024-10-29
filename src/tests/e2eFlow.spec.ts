@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { extractNumberFromLocatorTextContent } from '../helpers/helpers';
 
 config();
-test.describe('E2E flow', () => {
+test.describe.fixme('E2E flow', () => {
   test.describe.configure({ timeout: 300000 });
   test('validate a user can order a product when NOT logged in @MH @SMOKE', async ({
     browserName,

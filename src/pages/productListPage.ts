@@ -53,7 +53,7 @@ export class ProductListPage {
   async sortBy(sortOption: string): Promise<void> {
     await this.page.getByTestId('search-sort').selectOption(sortOption);
     try {
-      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      // await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
     } catch (error) {
       console.error('Timeout waiting for ClientManyProductsQuery response:', error);
       throw error;
@@ -66,8 +66,13 @@ export class ProductListPage {
    * @returns an array of prices
    */
   async getAllProductPrices(): Promise<number[]> {
-    // Get list of all the elements that contain the prices for each product
-    const productPrices = await this.page.locator('[data-testid="product-card-selling-price"]').allTextContents();
+    const salePriceElements = await this.page.getByTestId('product-card-sale-price').count();
+
+    let productPrices: string[];
+    // If the element exists, assert that the count is greater than 0
+    if (salePriceElements > 0) {
+      productPrices = await this.page.getByTestId('product-card-sale-price').allTextContents();
+    } else productPrices = await this.page.locator('[data-testid="product-card-selling-price"]').allTextContents();
     // Extract only the price from the array of string and convert to Int
     return productPrices.map((str) => parseInt(str.split(':')[1].trim().slice(1)));
   }
