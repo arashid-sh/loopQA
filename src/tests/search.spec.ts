@@ -29,13 +29,13 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
   test('verify search auto complete suggestions', async ({ browserName, page, navBar }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
-    await navBar.searchInputField.fill('t');
+    await navBar.searchInputField.fill('se');
     await expect(page.getByTestId('fs-search-auto-complete')).toBeVisible();
   });
 
   test('verify searching for a keyword that returns no results', async ({ browserName, page, navBar }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
-    await navBar.searchInputField.fill('random&*43', { timeout: 120000 });
+    await navBar.searchInputField.fill('ren&*43', { timeout: 120000 });
     await navBar.searchButton.click();
     await expect(page.getByTestId('fs-empty-state')).toBeVisible();
   });
