@@ -8,7 +8,8 @@ const successfulLinkMessage =
 test.describe('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () => {
   test.describe.configure({ timeout: 600000, mode: 'serial' });
 
-  test.beforeEach(async ({ page, navBar, productListPage }) => {
+  test.beforeEach(async ({ emailIntegrationService, page, navBar, productListPage }) => {
+    await emailIntegrationService.deleteAllMessages();
     await page.goto('https://qa.harpersbazaar.ecmapps.com/');
     const productName = process.env.PRODUCT ?? 'undefined';
     await navBar.searchForProduct(productName);
@@ -32,14 +33,17 @@ test.describe('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () =>
   });
 
   test('verify that a user with sephora and hearst/vtex account, can link, loyalty_service cookie is created, and successfully unlink (via api) when logged out happy path ECMP-4245 ECMP-4247', async ({
+    accountPage,
     browserName,
+    navBar,
     page,
     productListPage,
     productDetailsPage,
     emailIntegrationService,
+    signInPage,
   }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
-    const emailAddress = '0apau@yyue1jau.mailosaur.net'; //This email has been registered with sephora staging
+    const emailAddress = process.env.LOYALTY_EMAIL!; //This email has been registered with sephora staging
 
     await test.step('linking loyalty account', async () => {
       await productDetailsPage.linkYourAccount.click();
@@ -70,10 +74,11 @@ test.describe('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () =>
 
     // unlinking the account and verifying cookie is removed
     await test.step('unlink the account and verify cookie is removed', async () => {
-      await productDetailsPage.unlinkAccountLink.click();
-      await productDetailsPage.loyaltyEmailField.fill(emailAddress);
-      await productDetailsPage.loyaltyContinueButton.click();
-      // Get cookie and verify loyalty service cookie doest NOT exists.
+      await navBar.clickSignInButton();
+      await signInPage.loginUser(emailAddress, process.env.LOYALTY_PASSWORD!);
+      await navBar.myAccountButton.click();
+      await accountPage.loyaltyProgramLink.click();
+      await accountPage.unlinkYourAccountButton.click();
       const cookies = await page.context().cookies();
       expect(cookies.find((cookie) => cookie.name === 'loyalty_service')).toBeUndefined();
     });

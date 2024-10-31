@@ -89,7 +89,7 @@ config();
       });
 
       await navBar.searchForProduct(product);
-      await productListPage.selectNthProductFromList(5);
+      await productListPage.selectNthProductFromList(6);
 
       await test.step('get second products name and price', async () => {
         secondProductName = await productDetailsPage.productNameLocator.innerText();
