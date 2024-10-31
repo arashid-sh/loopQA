@@ -11,7 +11,7 @@ test.describe('Cart', { tag: '@faststore' }, () => {
     const product = 'sephora';
     await navBar.searchForProduct(product);
     await productListPage.selectNthProductFromList(1);
-    await productDetailsPage.addQuantityToCart('3');
+    await productDetailsPage.addQuantityToCart('1');
     // soft assertion to check that the right number of items appear in the mini cart
     expect.soft(await extractNumberFromLocatorTextContent(page.getByTestId('minicart-order-summary-subtotal-label'))).toContain('3');
     await cart.removeButton.click();
