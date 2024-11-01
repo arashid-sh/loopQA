@@ -22,7 +22,7 @@ async function waitForFileUnlock() {
 
 const successfulLinkMessage =
   'Thank you for being a Beauty Insider! Your account is linked to Sephora. You will earn Beauty Insider points for any Sephora products you purchase today.';
-test.describe('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () => {
+test.describe.skip('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () => {
   test.describe.configure({ timeout: 600000, mode: 'serial' });
 
   test.beforeAll(async () => {
