@@ -50,6 +50,7 @@ config();
       });
 
       await productDetailsPage.addToCartButton.click();
+      await page.getByTestId('fs-cart-sidebar').waitFor();
 
       const cartSubTotal = firstProductPrice! + secondProductPrice!;
 
@@ -101,7 +102,8 @@ config();
       // Verify both products are in the mini cart and their subtotal is correct.
 
       await test.step('verify second product is added and is the only product in the cart', async () => {
-        await expect(page.getByTestId('fs-cart-sidebar').getByText(secondProductName!)).toBeVisible();
+        await page.getByTestId('fs-cart-sidebar').waitFor();
+        await expect(page.getByTestId('fs-cart-sidebar').getByTestId('fs-list').getByText(secondProductName!)).toBeVisible();
         await expect(page.getByTestId('minicart-order-summary-total-value')).toContainText(secondProductPrice!.toString());
       });
     });
