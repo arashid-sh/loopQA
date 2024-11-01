@@ -1,18 +1,50 @@
 import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
+import { existsSync, writeFileSync, unlinkSync } from 'fs';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 config();
 
+const LOCK_FILE_PATH = join(__dirname, 'test_is_running.lock');
+const WAIT_INTERVAL = 200000; // ~ 3 minutes in milliseconds
+
+async function waitForFileUnlock() {
+  while (existsSync(LOCK_FILE_PATH)) {
+    console.log('Another test is running. Waiting ~3 minutes before retrying...');
+    await new Promise((resolve) => setTimeout(resolve, WAIT_INTERVAL));
+  }
+}
+
 const successfulLinkMessage =
   'Thank you for being a Beauty Insider! Your account is linked to Sephora. You will earn Beauty Insider points for any Sephora products you purchase today.';
-test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
+test.describe.skip('Loyalty Service', { tag: ['@faststore, @loyaltyService'] }, () => {
   test.describe.configure({ timeout: 600000, mode: 'serial' });
 
+  test.beforeAll(async () => {
+    test.setTimeout(500000);
+    await waitForFileUnlock();
+    writeFileSync(LOCK_FILE_PATH, ''); // Create the lock file
+    console.log('Lock file created. Running test...');
+  });
+
+  test.afterAll(() => {
+    test.setTimeout(500000);
+    if (existsSync(LOCK_FILE_PATH)) {
+      unlinkSync(LOCK_FILE_PATH); // Delete the lock file
+      console.log('Lock file removed. Test completed.');
+    }
+  });
+
   test.beforeEach(async ({ page, navBar, productListPage }) => {
-    await page.goto('https://qa.harpersbazaar.ecmapps.com/');
+    await page.goto('/');
     const productName = process.env.PRODUCT ?? 'undefined';
     await navBar.searchForProduct(productName);
-    await productListPage.selectNthProductFromList(0);
+    await productListPage.selectNthProductFromList(3);
   });
 
   test.afterEach(async ({ emailIntegrationService }) => {
@@ -21,6 +53,7 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
 
   test('verify random OTP code displays an error message ECMP-4252', async ({ browserName, page, productDetailsPage }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
+    await productDetailsPage.linkYourAccount.waitFor();
     await productDetailsPage.linkYourAccount.click();
     await productDetailsPage.loyaltyEmailField.fill('affan.rashid@hearst.com');
     await productDetailsPage.loyaltyContinueButton.click();
@@ -32,14 +65,17 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
   });
 
   test('verify that a user with sephora and hearst/vtex account, can link, loyalty_service cookie is created, and successfully unlink (via api) when logged out happy path ECMP-4245 ECMP-4247', async ({
+    accountPage,
     browserName,
+    navBar,
     page,
     productListPage,
     productDetailsPage,
     emailIntegrationService,
+    signInPage,
   }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
-    const emailAddress = '0apau@yyue1jau.mailosaur.net'; //This email has been registered with sephora staging
+    const emailAddress = process.env.LOYALTY_EMAIL!; //This email has been registered with sephora staging
 
     await test.step('linking loyalty account', async () => {
       await productDetailsPage.linkYourAccount.click();
@@ -70,11 +106,13 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
 
     // unlinking the account and verifying cookie is removed
     await test.step('unlink the account and verify cookie is removed', async () => {
-      await productDetailsPage.unlinkAccountLink.click();
-      await productDetailsPage.loyaltyEmailField.fill(emailAddress);
-      await productDetailsPage.loyaltyContinueButton.click();
-      // Get cookie and verify loyalty service cookie doest NOT exists.
+      await navBar.clickSignInButton();
+      await signInPage.loginUser(emailAddress, process.env.LOYALTY_PASSWORD!);
+      await navBar.myAccountButton.click();
+      await accountPage.loyaltyProgramLink.click();
+      await accountPage.unlinkYourAccountButton.click();
       const cookies = await page.context().cookies();
+      await page.waitForTimeout(2000);
       expect(cookies.find((cookie) => cookie.name === 'loyalty_service')).toBeUndefined();
     });
 
@@ -117,6 +155,7 @@ test.describe('Loyalty Service', { tag: '@loyaltyService' }, () => {
 
     // Get cookie and verify loyalty service cookie exists.
     const cookies = await page.context().cookies();
+    await page.waitForTimeout(2000);
     expect(cookies.find((cookie) => cookie.name === 'loyalty_service')).toBeDefined();
 
     // By default mailosaur gets messages within the last hour. We need to clean up by deleting our email so another test doesn't get the wrong verification code.

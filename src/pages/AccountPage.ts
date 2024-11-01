@@ -21,12 +21,13 @@ export class AccountPage {
   readonly saveButton: Locator;
   readonly saveAddressButton: Locator;
   readonly zipCodeInputField: Locator;
+  readonly unlinkYourAccountButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
 
     this.creditCardsLink = page.getByRole('link', { name: 'Credit cards' });
-    this.loyaltyProgramLink = page.getByRole('link', { name: 'Loyalty Program' });
+
     this.logout = page.getByText('Logout');
     this.editButton = page.getByRole('button', { name: 'Edit' });
     // Profile
@@ -45,6 +46,9 @@ export class AccountPage {
     this.deleteAddressButton = page.getByRole('button', { name: 'Delete address' });
     this.saveAddressButton = page.getByRole('button', { name: 'Save address' });
     this.editButtonNextToAddress = page.getByText('Edit', { exact: true });
+    // Loyalty Program
+    this.loyaltyProgramLink = page.getByRole('link', { name: 'Loyalty Program' });
+    this.unlinkYourAccountButton = page.getByRole('button', { name: 'Unlink Your Account' });
 
     this.saveButton = page.getByRole('button', { name: 'Save Changes' });
   }

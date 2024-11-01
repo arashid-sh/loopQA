@@ -24,7 +24,7 @@ export class NavBar {
    */
   async clickSignInButton(): Promise<void> {
     await this.signInButton.click();
-    await this.page.waitForResponse(/.*ciam-ui.kubestage.hearstapps.net\/assets.*/, { timeout: 120000 });
+    // await this.page.waitForResponse(/.*ciam-ui.kubestage.hearstapps.net\/assets.*/, { timeout: 120000 });
   }
 
   /**
@@ -37,12 +37,12 @@ export class NavBar {
       await this.mobileSearchButton.click();
       await this.searchInputField.fill(productName);
       await this.mobileSearchButton.click();
-      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      // await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
       await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor({ timeout: 120000 });
     } else {
       await this.searchInputField.pressSequentially(productName, { timeout: 120000 });
       await this.searchButton.click();
-      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      //await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
       await this.page.locator('[data-testid="product-gallery"] [data-testid="product-link"]').first().waitFor({ timeout: 120000 });
     }
   }
@@ -66,7 +66,7 @@ export class NavBar {
   async clickLink(link: string): Promise<void> {
     await this.page.getByRole('link', { name: `${link}` }).click();
     try {
-      await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
+      //  await this.page.waitForResponse(/.*ClientManyProductsQuery.*/, { timeout: 120000 });
     } catch (error) {
       console.error('Timeout waiting for ClientManyProductsQuery response:', error);
       throw error;

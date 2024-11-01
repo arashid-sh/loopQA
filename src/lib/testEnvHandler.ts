@@ -1,9 +1,11 @@
 export const environments = {
-  womenshealthqa: 'https://qa.womenshealth.ecmapps.com/',
-  menshealthqa: 'https://qa.menshealth.ecmapps.com/',
   cosmopolitanqa: 'https://qa.cosmopolitan.ecmapps.com/',
-  harpersbazaarqa: 'https://qa.harpersbazaar.ecmapps.com/',
   harpersbazaarprod: 'https://shop.harpersbazaar.com/',
+  harpersbazaarqa: 'https://qa.harpersbazaar.ecmapps.com/',
+  menshealthqa: 'https://qa.menshealth.ecmapps.com/',
+  oprahqa: '',
+  preventionqa: 'https://qa.prevention.ecmapps.com/',
+  womenshealthqa: 'https://qa.womenshealth.ecmapps.com/',
 };
 
 /**

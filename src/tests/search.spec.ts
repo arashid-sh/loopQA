@@ -1,5 +1,6 @@
 import { expect, test } from '../../src/lib/fixture';
 import { config } from 'dotenv';
+import { setFeatureFlagCookie } from '../helpers/setFeatureFlagCookie';
 
 config();
 
@@ -35,7 +36,7 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
   test('verify searching for a keyword that returns no results', async ({ browserName, page, navBar }) => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
-    await navBar.searchInputField.fill('ren&*43', { timeout: 120000 });
+    await navBar.searchInputField.fill('$%^&*()', { timeout: 120000 });
     await navBar.searchButton.click();
     await expect(page.getByTestId('fs-empty-state')).toBeVisible();
   });
@@ -43,7 +44,8 @@ test.describe('Search', { tag: '@faststore' }, () => {
 
 test.describe('ECM search', { tag: ['@ECMSearch', '@faststore'] }, () => {
   test.describe.configure({ timeout: 2000000 });
-  test('OOS products should not be shown on the PLP page', async ({ browserName, page, navBar, productListPage }) => {
+  test('OOS products should not be shown on the PLP page', async ({ browserName, context, page, navBar, productListPage }) => {
+    await setFeatureFlagCookie(context, 'feature_flag_rmn_override', 'true', '.ecmapps.com');
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await page.goto('/');
     // Get all categories from the nav bar e.g Subscribe, fitness, etc

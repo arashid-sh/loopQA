@@ -51,7 +51,7 @@ test.describe('User Account', { tag: '@faststore' }, () => {
     const randomAptNumber = Math.floor(Math.random() * 900) + 100; // Generates a random number between 100 and 999
     const addressWithApt = `${addressLine1} #${randomAptNumber}`;
     await accountPage.addressesLink.click();
-    await accountPage.editButton.click();
+    await accountPage.editButton.first().click();
     await accountPage.editButtonNextToAddress.click();
     await accountPage.addressLine1.clear();
     await accountPage.addressLine1.focus();
