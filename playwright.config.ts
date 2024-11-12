@@ -50,7 +50,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium - womens health qa',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 }, baseURL: process.env.TEST_ENV },
     },
     {
       name: 'webkit - cosmo qa',
