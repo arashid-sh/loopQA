@@ -1,3 +1,5 @@
+/** DEPRECATED IN FAVOR OF USING process.env.TEST_ENV */
+
 export const environments = {
   cosmopolitanqa: 'https://qa.cosmopolitan.ecmapps.com/',
   harpersbazaarprod: 'https://shop.harpersbazaar.com/',

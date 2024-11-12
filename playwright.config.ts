@@ -40,7 +40,7 @@ export default defineConfig({
     navigationTimeout: 60000,
     actionTimeout: 60000,
     headless: true,
-    baseURL: setEnvironment(),
+    baseURL: process.env.TEST_ENV,
     launchOptions: {
       slowMo: 1_000,
     },

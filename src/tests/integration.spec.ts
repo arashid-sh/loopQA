@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 [{ loggedIn: true }, { loggedIn: false }].forEach(({ loggedIn }) => {
-  test.describe('Integration Test', { tag: ['@faststore'] }, () => {
+  test.describe('Integration Test', { tag: ['@faststore', '@smoke'] }, () => {
     const product = process.env.PRODUCT ?? 'sephora';
     test.describe.configure({ timeout: 300000 });
 
