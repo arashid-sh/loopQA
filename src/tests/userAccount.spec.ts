@@ -42,7 +42,7 @@ test.describe('User Account', { tag: '@faststore' }, () => {
     await expect(page.getByText(addressLine1!)).toBeVisible();
     await expect(page.getByText(zip!)).toBeVisible();
     // Clean up. Addresses section can have multiple addresses. Clicking on the Address's 'Edit' button that was just created
-    await page.locator('span.street', { hasText: '300 W 57th St' }).locator('xpath=ancestor::article//footer//button').click();
+    await page.locator('span.street', { hasText: '300 W 57th St' }).locator('xpath=ancestor::article//footer//button').first().click();
     await accountPage.deleteAddressButton.click();
   });
 
@@ -51,7 +51,7 @@ test.describe('User Account', { tag: '@faststore' }, () => {
     const randomAptNumber = Math.floor(Math.random() * 900) + 100; // Generates a random number between 100 and 999
     const addressWithApt = `${addressLine1} #${randomAptNumber}`;
     await accountPage.addressesLink.click();
-    await accountPage.editButton.first().click();
+    await accountPage.editButton.click();
     await accountPage.editButtonNextToAddress.click();
     await accountPage.addressLine1.clear();
     await accountPage.addressLine1.focus();

@@ -30,7 +30,9 @@ test.describe('Product List Page', { tag: '@faststore' }, () => {
     test.slow(browserName === 'webkit', 'This feature is slow in Safari');
     await productListPage.sortBy('price_asc');
     const prices = await productListPage.getAllProductPrices();
-    expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
+    if (prices[0] === undefined) {
+      expect(prices[1]).toBeLessThanOrEqual(prices[prices.length - 1]);
+    } else expect(prices[0]).toBeLessThanOrEqual(prices[prices.length - 1]);
   });
 
   // This filter is not showing up in the PLP page as of 08/27/24

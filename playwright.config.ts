@@ -40,7 +40,7 @@ export default defineConfig({
     navigationTimeout: 60000,
     actionTimeout: 60000,
     headless: true,
-    baseURL: setEnvironment(),
+    baseURL: process.env.TEST_ENV,
     launchOptions: {
       slowMo: 1_000,
     },
@@ -50,7 +50,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium - womens health qa',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 } },
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 }, baseURL: process.env.TEST_ENV },
     },
     {
       name: 'webkit - cosmo qa',
