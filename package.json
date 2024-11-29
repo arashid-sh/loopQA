@@ -6,9 +6,8 @@
   "author": "Affan Rashid <affan.rashid@hearst.com>",
   "type": "module",
   "scripts": {
-    "test": "npx playwright test",
-    "test:mhqa": "TEST_ENV=mhqa npx playwright test --grep @MH",
-    "test:mhqa-smoke": "TEST_ENV=mhqa npx playwright test --grep @MH @SMOKE",
+    "test": "npx playwright test -g '@loopQA'",
+    "report": "npx playwright show-report",
     "lint": "npx eslint --fix . && npx prettier -w ."
   },
   "devDependencies": {

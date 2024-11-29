@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { config } from 'dotenv';
-import { setEnvironment } from './src/lib/testEnvHandler';
+
 config();
 
 /**
@@ -37,8 +37,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'on-first-retry',
-    navigationTimeout: 60000,
-    actionTimeout: 60000,
+    navigationTimeout: 30000,
+    actionTimeout: 30000,
     headless: true,
     baseURL: process.env.TEST_ENV,
     launchOptions: {
@@ -52,22 +52,5 @@ export default defineConfig({
       name: 'chromium - womens health qa',
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 }, baseURL: process.env.TEST_ENV },
     },
-    {
-      name: 'webkit - cosmo qa',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 }, baseURL: 'https://qa.cosmopolitan.ecmapps.com/' },
-    },
-    {
-      name: 'webkit - prevention qa',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1600, height: 1080 }, baseURL: 'https://qa.prevention.ecmapps.com/' },
-    },
-    // {
-    //   name: 'webkit - harper bazaar qa',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //     viewport: { width: 1600, height: 1080 },
-    //     baseURL: 'https://qa.harpersbazaar.ecmapps.com/',
-    //     video: 'retain-on-failure',
-    //   },
-    // },
   ],
 });
