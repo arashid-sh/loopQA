@@ -49,7 +49,7 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium - womens health qa',
+      name: 'chromium - loop qa assessment',
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1080 }, baseURL: process.env.TEST_ENV },
     },
   ],

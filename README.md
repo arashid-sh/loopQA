@@ -18,10 +18,10 @@ Assumptions: Mac with VSCode installed. We also use YARN in this repo.
   - To check if node and npm is installed run `node -v` and
     `npm -v` in your terminal
 - Clone this repo to your local machine and navigate to the root of the folder
-- Type `npx playwright install` to install playwright browsers
 - Type `npm i` to install dependencies
-- To run all tests type `npm run test`
-- To view the report type `npm run report`
+- Type `npx playwright install` to install playwright browsers
+- To run all tests, type `npm run test`. If you would like to see the tests run in 'headed' mode, type in 'npm run
+- To view the report, type `npm run report`
 
 ## UI Mode
 
