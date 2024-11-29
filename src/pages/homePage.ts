@@ -20,7 +20,7 @@ export class HomePage {
    * This function goes through all the columns on the page looking for the column name specified (e.g. 'To do')
    * and returns all the items with in the column.
    * @param columnName
-   * @returns
+   * @returns an array of locators for the items that are within the column
    */
   async getItemListFromColumn(columnName: string): Promise<Locator[]> {
     // Get locators for all the columns
@@ -30,6 +30,7 @@ export class HomePage {
     for (let i = 0; i <= columns.length; i++) {
       // If column name found, return all the items within the column
       if (await columns[i].filter({ hasText: `${columnName}` }).isVisible()) {
+        // Return all the items with in the column
         return this.page
           .locator('[class="CommentOnlyBoardColumn CommentOnlyBoardBody-column"]')
           .nth(i)
@@ -37,6 +38,7 @@ export class HomePage {
           .all();
       }
     }
+    // return an empty array that will be used for error checking
     return this.page.locator('').all();
   }
 }
