@@ -41,17 +41,17 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run loyalty service tests
-        # Loyalty service tests can't be run in parallel because there will be race conditions when the OTP email is sent out. Tests will retrieve the wrong OTP from mailosaur if run in prallel
-        run: |
-          TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService' --workers=1
+        # - name: Run loyalty service tests
+        #   # Loyalty service tests can't be run in parallel because there will be race conditions when the OTP email is sent out. Tests will retrieve the wrong OTP from mailosaur if run in prallel
+        #   run: |
+        #     TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService' --workers=1
         continue-on-error: true
       - name: Run Playwright tests
         run: |
           if [ -n "${{ github.event.inputs.tags }}" ]; then
-            TEST_ENV=${{ github.event.inputs.environment || 'https://qa.womenshealth.ecmapps.com/' }} npx playwright test -g '${{ github.event.inputs.tags }}'
+            TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '${{ github.event.inputs.tags }}'
           else
-            TEST_ENV=${{ github.event.inputs.environment || 'https://qa.womenshealth.ecmapps.com/' }} npx playwright test -g '@faststore'
+            TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '@faststore'
           fi
       - name: Uploading artifacts
         uses: actions/upload-artifact@v4

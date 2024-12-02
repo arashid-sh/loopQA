@@ -1,5 +1,6 @@
-import { expect, test } from '../lib/fixture';
 import { config } from 'dotenv';
+
+import { expect, test } from '../lib/fixture';
 
 config();
 
@@ -51,7 +52,7 @@ test.describe('Sign in', { tag: '@loopQA' }, () => {
       tags: ['Low effort', 'New hardware', 'High Priority', 'Done'],
     },
   ].forEach((testCase) => {
-    test(`verify [${testCase.item}] is in the [${testCase.column}] column with tags: ${testCase.tags}`, async ({
+    test(`verify [${testCase.item}] is in the [${testCase.column}] column with tags: [${testCase.tags}]`, async ({
       homePage,
     }) => {
       // Click on the project

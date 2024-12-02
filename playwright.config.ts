@@ -34,9 +34,9 @@ export default defineConfig({
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on-first-retry', // This will only generate a trace when the tests is retried on CI. See line 26. This can be changed to generate a trace locally on every run.
     screenshot: 'only-on-failure',
-    video: 'on-first-retry',
+    video: 'on-first-retry', // This will only create a video when the tests is retried on CI. See line 26. This can be changed to create a video of the test locally on every run.
     navigationTimeout: 30000,
     actionTimeout: 30000,
     headless: true,

@@ -6,7 +6,7 @@
   "author": "Affan Rashid <affan.rashid@hearst.com>",
   "type": "module",
   "scripts": {
-    "test": "npx playwright test -g '@loopQA'",
+    "test": "npx playwright test -g '@loopQA' --headed",
     "report": "npx playwright show-report",
     "lint": "npx eslint --fix . && npx prettier -w ."
   },
