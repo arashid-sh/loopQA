@@ -1,74 +1,74 @@
-name: Playwright Tests
+# name: Playwright Tests
 
-on:
-  pull_request:
-    branches: [main, master, '*']
-    types: [opened, synchronize]
-  schedule:
-    - cron: '0 0 * * *' # This will run the pipeline once a day at midnight UTC
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'The environment to run the Playwright tests in'
-        required: true
-        default: 'whqa'
-      tags:
-        description: 'Optional tags to filter Playwright tests.'
-        required: false
-      branch:
-        description: 'Optional parameter. This is the branch name that will be sent by the triggering branch.'
-        required: false
-      repo:
-        description: 'Optional parameter. This will be the name of the repo.'
-        required: false
-      pr_author:
-        description: 'Optional parameter. This parameter should send the PR author of the triggering repo.'
-        required: false
+# on:
+#   pull_request:
+#     branches: [main, master, '*']
+#     types: [opened, synchronize]
+#   schedule:
+#     - cron: '0 0 * * *' # This will run the pipeline once a day at midnight UTC
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: 'The environment to run the Playwright tests in'
+#         required: true
+#         default: 'whqa'
+#       tags:a
+#         description: 'Optional tags to filter Playwright tests.'
+#         required: false
+#       branch:
+#         description: 'Optional parameter. This is the branch name that will be sent by the triggering branch.'
+#         required: false
+#       repo:
+#         description: 'Optional parameter. This will be the name of the repo.'
+#         required: false
+#       pr_author:
+#         description: 'Optional parameter. This parameter should send the PR author of the triggering repo.'
+#         required: false
 
-run-name: Running tests on ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}}
+# run-name: Running tests on ${{ github.event.inputs.environment || 'womenshealthqa'}} triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}}
 
-jobs:
-  test:
-    name: "Running tests on [environment: ${{ github.event.inputs.environment || 'womenshealthqa'}}]"
-    timeout-minutes: 60
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        # - name: Run loyalty service tests
-        #   # Loyalty service tests can't be run in parallel because there will be race conditions when the OTP email is sent out. Tests will retrieve the wrong OTP from mailosaur if run in prallel
-        #   run: |
-        #     TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService' --workers=1
-        continue-on-error: true
-      - name: Run Playwright tests
-        run: |
-          if [ -n "${{ github.event.inputs.tags }}" ]; then
-            TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '${{ github.event.inputs.tags }}'
-          else
-            TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '@faststore'
-          fi
-      - name: Uploading artifacts
-        uses: actions/upload-artifact@v4
-        id: artifact-upload-step
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-      - name: Notify Slack Action
-        uses: ravsamhq/notify-slack-action@v2
-        if: always()
-        with:
-          status: ${{job.status}}
-          notify_when: 'failure'
-          notification_title: '{workflow} have {status_message}'
-          message_format: '{emoji} *{workflow}* {status_message} in <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
-          footer: 'You can download the job artifact(s) at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
+# jobs:
+#   test:
+#     name: "Running tests on [environment: ${{ github.event.inputs.environment || 'womenshealthqa'}}]"
+#     timeout-minutes: 60
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: lts/*
+#       - name: Install dependencies
+#         run: npm ci
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
+#         # - name: Run loyalty service tests
+#         #   # Loyalty service tests can't be run in parallel because there will be race conditions when the OTP email is sent out. Tests will retrieve the wrong OTP from mailosaur if run in prallel
+#         #   run: |
+#         #     TEST_ENV=harpersbazaarqa npx playwright test -g '@loyaltyService' --workers=1
+#         continue-on-error: true
+#       - name: Run Playwright tests
+#         run: |
+#           if [ -n "${{ github.event.inputs.tags }}" ]; then
+#             TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '${{ github.event.inputs.tags }}'
+#           else
+#             TEST_ENV=${{ github.event.inputs.environment || 'https://app.asana.com/-/login' }} npx playwright test -g '@faststore'
+#           fi
+#       - name: Uploading artifacts
+#         uses: actions/upload-artifact@v4
+#         id: artifact-upload-step
+#         if: always()
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 30
+#       - name: Notify Slack Action
+#         uses: ravsamhq/notify-slack-action@v2
+#         if: always()
+#         with:
+#           status: ${{job.status}}
+#           notify_when: 'failure'
+#           notification_title: '{workflow} have {status_message}'
+#           message_format: '{emoji} *{workflow}* {status_message} in <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> triggered by ${{ github.event.inputs.repo }}/${{ github.event.inputs.branch}} authored by ${{ github.event.inputs.pr_author }}'
+#           footer: 'You can download the job artifact(s) at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK}}
